@@ -12,7 +12,7 @@ To run the demo, additionally check out https://github.com/scottbert/gulp-expres
 
 Do ```npm install```
 
-Then ```gulp server``` to run the livereload local server ( http://localhost:9000 )
+Then ```gulp``` to run the livereload local server ( http://localhost:9000 )
 
 ```NODE_ENV=production gulp deploy``` to deploy - this puts all of the required files into a 'deploy' directory. You can now put this directory somewhere else and run it.
 
