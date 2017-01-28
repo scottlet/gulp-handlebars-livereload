@@ -3,7 +3,7 @@ var gulp = require('gulp');
 var gulpHandlebars = require('gulp-compile-handlebars');
 var rename = require('gulp-rename');
 
-gulp.task('buildhtml', ['clean'], function () {
+function buildHTML () {
     var templateData = {
         title: 'The Test Page',
         pageTitle: 'Welcome!'
@@ -22,4 +22,7 @@ gulp.task('buildhtml', ['clean'], function () {
         .pipe(gulpHandlebars(templateData, options))
         .pipe(rename('index.html'))
         .pipe(gulp.dest('dist'));
-});
+}
+
+gulp.task('buildhtml', ['clean'], buildHTML);
+gulp.task('buildhtml-lr', buildHTML);
