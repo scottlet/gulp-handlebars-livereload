@@ -2,7 +2,7 @@
 
 Requires global gulp and gulp-cli to be installed
 
-Also requires node/npm, obvs.
+Also requires node/npm, obvs > 4.x.
 
 If you have homebrew installed on OSX this is as simple as `brew install node`.
 
@@ -12,7 +12,7 @@ To run the demo, additionally check out https://github.com/scottbert/gulp-handle
 
 Do ```npm install```
 
-Then ```gulp server``` to run the livereload local server ( http://localhost:9000 )
+Then ```gulp``` to run the livereload local server ( [http://localhost:9000](http://localhost:9000) )
 
 ```NODE_ENV=production gulp deploy``` to deploy - this puts all of the required files into a 'deploy' directory. You can now put this directory somewhere else and run it.
 
