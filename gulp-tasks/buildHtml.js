@@ -1,13 +1,10 @@
 'use strict';
 var gulp = require('gulp');
 var gulpHandlebars = require('gulp-compile-handlebars');
-var rename = require('gulp-rename');
+var gulpRename = require('gulp-rename');
 
 function buildHTML () {
-    var templateData = {
-        title: 'The Test Page',
-        pageTitle: 'Welcome!'
-    };
+    var templateData = require('../src/data/templatedata');
     var options = {
         allowedExtensions: ['hbs'],
         batch : ['./src/templates/partials'],
@@ -18,9 +15,14 @@ function buildHTML () {
         }
     };
 
-    return gulp.src('src/templates/index.hbs')
+    return gulp.src([
+        'src/templates/**/*',
+        '!src/templates/partials/',
+        '!src/templates/partials/**/*'])
         .pipe(gulpHandlebars(templateData, options))
-        .pipe(rename('index.html'))
+        .pipe(gulpRename(function (path) {
+            path.extname = '.html';
+        }))
         .pipe(gulp.dest('dist'));
 }
 

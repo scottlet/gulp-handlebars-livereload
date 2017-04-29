@@ -2,10 +2,11 @@
 
 const RANDOM_PORT = 35729 - 50 + parseInt(Math.random() * 100, 10); // Randomize port for livereload.
 
-module.exports = {
+const OPTIONS = {
     BROWSER_CONFIG: ['> 1%', 'IE 9'],
     CSS_DEST_PATH: 'dist/css/',
     CSS_SRC_PATH: 'src/sass',
+    DATA_SRC: 'src/data',
     DEPLOY_DEST: 'deploy/',
     DIST_DEST: 'dist/',
     FONT_SRC: 'src/fonts',
@@ -26,3 +27,5 @@ module.exports = {
     TEMPLATES_SRC:'src/templates/',
     TESTS_PATH: 'src/tests/'
 };
+
+module.exports = OPTIONS;

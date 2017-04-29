@@ -13,11 +13,13 @@ function watch() {
     const watchPublic = gulp.watch([CONSTS.IMG_SRC + '/**/*', CONSTS.FONT_SRC + '/**/*'], ['copy-lr']);
     const watchSass = gulp.watch([CONSTS.CSS_SRC_PATH + '/**/*'], ['sass-watch']);
     const watchTemplates = gulp.watch([CONSTS.TEMPLATES_SRC + '/**/*'], ['buildhtml-lr']);
+    const watchData = gulp.watch([CONSTS.DATA_SRC + '/**/*'], ['buildhtml-lr']);
     const watchTests = gulp.watch([CONSTS.TESTS_PATH + '/**/*.js', CONSTS.JS_SERVER_SRC + '/**/*'], ['mochaTest']);
     [
         watchCopiedTemplates,
         watchPublic,
         watchSass,
+        watchData,
         watchTemplates,
         watchTests
     ].forEach((w) => {
