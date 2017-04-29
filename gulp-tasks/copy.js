@@ -20,3 +20,4 @@ function copyFilesFn (src, dest, base, reload) {
 }
 
 gulp.task('copy', ['clean'], copyStaticFiles);
+gulp.task('copy-lr', copyStaticFiles);

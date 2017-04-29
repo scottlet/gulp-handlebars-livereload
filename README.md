@@ -8,7 +8,7 @@ If you have homebrew installed on OSX this is as simple as `brew install node`.
 
 If you don't have homebrew on OSX, visit http://brew.sh
 
-To run the demo, additionally check out https://github.com/scottbert/gulp-express-livereload-src-example then copy into the root of this folder as "src"
+To run the demo, additionally check out https://github.com/scottbert/gulp-handlebars-livereload-src-example then copy into the root of this folder as "src"
 
 Do ```npm install```
 

@@ -2,7 +2,7 @@
 const gulp = require('gulp');
 
 gulp.task('default', () => {
-    gulp.start('build');
+    gulp.start('server');
 });
 
 gulp.task('local', () => {
