@@ -10,6 +10,7 @@ function makeServer() {
     const port = CONSTS.GULP_PORT;
     gulpConnect.server({
         port,
+        host: '0.0.0.0',
         root: './dist',
         middleware: (server) => {
             return [

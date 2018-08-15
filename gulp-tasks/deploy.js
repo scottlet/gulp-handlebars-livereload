@@ -4,7 +4,7 @@ const CONSTS = require('./CONSTS');
 
 function copyDeploy () {
     return gulp.src([CONSTS.DIST_DEST + '/**/*'], {base: '.'})
-    .pipe(gulp.dest(CONSTS.DEPLOY_DEST));
+        .pipe(gulp.dest(CONSTS.DEPLOY_DEST));
 }
 
 gulp.task('copydeploy', ['build'], copyDeploy);

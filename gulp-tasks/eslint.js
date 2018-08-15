@@ -9,9 +9,9 @@ const CONSTS = require('./CONSTS');
 
 gulp.task('eslint',  () => {
     return gulp.src([CONSTS.GULPFILE, CONSTS.GULP_TASKS + '/**/*.js', CONSTS.JS_SRC + '/**/*.js'])
-    .pipe(gulpWait(3050))
-    .pipe(gulpPlumber({errorHandler: gulpNotify.onError('ESLint Error: <%= error.message %>')}))
-    .pipe(gulpESLint())
-    .pipe(gulpESLint.format())
-    .pipe(gulpESLint.failAfterError());
+        .pipe(gulpWait(3050))
+        .pipe(gulpPlumber({errorHandler: gulpNotify.onError('ESLint Error: <%= error.message %>')}))
+        .pipe(gulpESLint())
+        .pipe(gulpESLint.format())
+        .pipe(gulpESLint.failAfterError());
 });
