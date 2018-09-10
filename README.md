@@ -2,7 +2,7 @@
 
 Requires global gulp and gulp-cli to be installed
 
-Also requires node/npm, obvs > 4.x.
+Also requires node/npm > 10.x.
 
 If you have homebrew installed on OSX this is as simple as `brew install node`.
 

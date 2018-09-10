@@ -20,6 +20,13 @@ const helpers = {
     capitalise: function (str) {
         return str.toUpperCase();
     },
+    eq: function(val, val2, options) {
+        if (val == val2) {
+            return options.fn(this);
+        } else {
+            return options.inverse(this);
+        }
+    },
     hostname: CONSTS.HOST,
     hostpath: CONSTS.PATH,
     version: package_json.version
@@ -47,7 +54,7 @@ function pathBuilder(locale) {
         const join = '..';
         let urlparts = [];
         let newPath = assetPath.replace(/^\//, '');
-        let staticasset = /^(pdfs|css|js|images|fonts|video)/.test(newPath);
+        let staticasset = /^(pdfs|css|js|images|fonts|video|audio)/.test(newPath);
 
         let myPath = data.data.file.relative;
 
@@ -102,13 +109,16 @@ function buildFiles(file, enc, callback) {
     let locale = getStem(file.path);
     let finalPath = 'dist' + (locale === 'en' ? '' : '/' + locale);
     let dynamicHelpers = {
-        locale,
+        locale: locale,
+        getLocale: function () {
+            return locale;
+        },
         path: pathBuilder(locale),
         imagepath: imagePathBuilder(locale)
     };
 
     let i18n = new i18n2({
-        locales: ['en'],
+        locales: ['en', 'de'],
         defaultLocale: 'en',
         extension: '.json',
         directory: './src/i18n',
@@ -117,6 +127,8 @@ function buildFiles(file, enc, callback) {
             throw ('error');
         }
     });
+
+    i18n.setLocale(locale);
 
     dynamicHelpers.__ = function (text) {
         let desktop = i18n.__(text);

@@ -4,6 +4,7 @@ const package_json = JSON.parse(fs.readFileSync('./package.json'));
 const RANDOM_PORT = 35729 - 50 + parseInt(Math.random() * 100, 10); // Randomize port for livereload.
 const DIST = 'dist';
 const version = package_json.version;
+const name = package_json.name;
 const STATIC_ASSETS = `${DIST}/${version}`;
 
 const OPTIONS = {
@@ -13,7 +14,7 @@ const OPTIONS = {
     CSS_DEST_PATH: `${STATIC_ASSETS}/css`,
     CSS_SRC_PATH: 'src/sass',
     DATA_SRC: 'src/data',
-    DEPLOY_DEST: `deploy/${version}`,
+    DEPLOY_DEST: `deploy/${name}-${version}`,
     DIST_DEST: `${DIST}/`,
     FONT_SRC: 'src/fonts',
     GULP_PORT: process.env.GULP_PORT || 9000,
