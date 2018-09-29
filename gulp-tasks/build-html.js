@@ -1,9 +1,9 @@
 'use strict';
+
 const CONSTS = require('./CONSTS');
-const DELAY = 0;
 const fs = require('fs');
 const gulp = require('gulp');
-const gulpIf =require('gulp-if');
+const gulpIf = require('gulp-if');
 const gulpHB = require('gulp-hb');
 const nodeNotify = require('node-notifier');
 const gulpPlumber = require('gulp-plumber');
@@ -12,50 +12,53 @@ const handlebarsLayouts = require('handlebars-layouts');
 const i18n2 = require('i18n-2');
 const through2 = require('through2');
 const gulpHtmlmin = require('gulp-htmlmin');
-const isProd = (CONSTS.NODE_ENV === 'production');
+const isProd = CONSTS.NODE_ENV === 'production';
 
-const package_json = JSON.parse(fs.readFileSync('./package.json'));
+const packageJson = JSON.parse(fs.readFileSync('./package.json'));
 
 const helpers = {
-    capitalise: function (str) {
+    capitalise: str => {
         return str.toUpperCase();
     },
-    eq: function(val, val2, options) {
+
+    eq: (val, val2, options) => {
         if (val == val2) {
             return options.fn(this);
-        } else {
-            return options.inverse(this);
         }
+
+        return options.inverse(this);
     },
     hostname: CONSTS.HOST,
     hostpath: CONSTS.PATH,
-    version: package_json.version
+    version: packageJson.version
 };
 
-let delay;
 let errorShown;
 
 function imagePathBuilder(locale) {
     let builder = pathBuilder(locale);
-    return function (assetPath, data) {
+
+    return (assetPath, data) => {
         assetPath = 'images/' + assetPath;
+
         return builder(assetPath, data);
     };
 }
 
 function pathBuilder(locale) {
     let version = helpers.version;
+
     if (locale === 'en') {
         locale = '';
     } else {
         locale += '/';
     }
-    return function(assetPath, data) {
+
+    return (assetPath, data) => {
         const join = '..';
         let urlparts = [];
         let newPath = assetPath.replace(/^\//, '');
         let staticasset = /^(pdfs|css|js|images|fonts|video|audio)/.test(newPath);
-
         let myPath = data.data.file.relative;
 
         if (staticasset) {
@@ -64,7 +67,7 @@ function pathBuilder(locale) {
 
         //console.log('newpath', newPath);
 
-        myPath.split('/').forEach(function(part, idx) {
+        myPath.split('/').forEach((part, idx) => {
             if (idx) {
                 //        console.log('EHAT', idx);
                 urlparts.push(join);
@@ -75,7 +78,7 @@ function pathBuilder(locale) {
             urlparts.push(version);
         }
 
-        newPath = ((urlparts.length) ? urlparts.join('/') + '/' : '') + newPath;
+        newPath = (urlparts.length ? urlparts.join('/') + '/' : '') + newPath;
         //console.log('filePath', data.data.file.relative);
         //console.log('orig assetpath', assetPath, 'new assetpath', newPath);
 
@@ -83,8 +86,8 @@ function pathBuilder(locale) {
     };
 }
 
-function getStem (path) {
-    return path.split('/')[path.split('/').length -1].split('.')[0];
+function getStem(path) {
+    return path.split('/')[path.split('/').length - 1].split('.')[0];
 }
 
 function renameFile(path) {
@@ -93,7 +96,7 @@ function renameFile(path) {
     }
 }
 
-function errorHandler (error) {
+function errorHandler(error) {
     if (!errorShown) {
         nodeNotify.notify({
             message: 'Error: ' + error.message,
@@ -110,7 +113,7 @@ function buildFiles(file, enc, callback) {
     let finalPath = 'dist' + (locale === 'en' ? '' : '/' + locale);
     let dynamicHelpers = {
         locale: locale,
-        getLocale: function () {
+        getLocale: () => {
             return locale;
         },
         path: pathBuilder(locale),
@@ -123,16 +126,16 @@ function buildFiles(file, enc, callback) {
         extension: '.json',
         directory: './src/i18n',
         indent: '    ',
-        dump: function () {
-            throw ('error');
+        dump: () => {
+            throw 'error';
         }
     });
 
     i18n.setLocale(locale);
 
-    dynamicHelpers.__ = function (text) {
-        let desktop = i18n.__(text);
-        let mobile = i18n.__(text + '_mobile');
+    dynamicHelpers.__ = text => { //eslint-disable-line
+        let desktop = i18n.__(text); //eslint-disable-line
+        let mobile = i18n.__(text + '_mobile'); //eslint-disable-line
         if (mobile.replace(/_mobile/gi, '') !== text) {
             return `
             <span class="ln-desktop">${desktop}</span>
@@ -150,7 +153,7 @@ function buildFiles(file, enc, callback) {
         .helpers(Object.assign({}, helpers, dynamicHelpers))
         .data('./src/data/**/*.json');
 
-    this.push(gulp.src([
+    gulp.src([
         'src/templates/**/*',
         '!src/templates/layouts/',
         '!src/templates/layouts/**/*',
@@ -168,22 +171,14 @@ function buildFiles(file, enc, callback) {
             removeComments: true,
             removeRedundantAttributes: true
         })))
-        .pipe(gulp.dest(finalPath)));
-    setTimeout(callback, delay);
+        .pipe(gulp.dest(finalPath))
+        .on('error', callback)
+        .on('end', callback);
 }
 
-function buildHTML () {
-    delay = DELAY;
+function buildHTML() {
     errorShown = false;
-    return gulp
-        .src('./src/i18n/*.json')
-        .pipe(through2.obj(buildFiles));
 
-}
-
-function buildHTML_LR () {
-    delay = 0;
-    errorShown = false;
     return gulp
         .src('./src/i18n/*.json')
         .pipe(through2.obj(buildFiles));
@@ -191,4 +186,4 @@ function buildHTML_LR () {
 }
 
 gulp.task('buildhtml', ['clean'], buildHTML);
-gulp.task('buildhtml-lr', buildHTML_LR);
+gulp.task('buildhtml-lr', buildHTML);

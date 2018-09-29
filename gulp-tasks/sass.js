@@ -1,4 +1,5 @@
 'use strict';
+
 const autoprefixer = require('autoprefixer');
 const cssMqpacker = require('css-mqpacker');
 const csswring = require('csswring');
@@ -10,7 +11,7 @@ const gulpPlumber = require('gulp-plumber');
 const gulpPostcss = require('gulp-postcss');
 const gulpSass = require('gulp-sass');
 const gulpSourcemaps = require('gulp-sourcemaps');
-const postcssAssets  = require('postcss-assets');
+const postcssAssets = require('postcss-assets');
 const nodeBourbon = require('node-bourbon').includePaths;
 const nodeNormalizeScss = require('node-normalize-scss').includePaths;
 const CONSTS = require('./CONSTS');
@@ -32,6 +33,7 @@ function styles() {
         csswring,
         postcssAssets
     ];
+
     return gulp.src(CONSTS.CSS_SRC_PATH + '/**/*.scss')
         .pipe(gulpIf(isDev, gulpSourcemaps.init()))
         .pipe(gulpPlumber({errorHandler: gulpNotify.onError('Styles Error: <%= error.message %>')}))

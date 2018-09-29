@@ -1,10 +1,14 @@
 'use strict';
+
 const fs = require('fs');
-const package_json = JSON.parse(fs.readFileSync('./package.json'));
-const RANDOM_PORT = 35729 - 50 + parseInt(Math.random() * 100, 10); // Randomize port for livereload.
+const packageJson = JSON.parse(fs.readFileSync('./package.json'));
+const DEFAULT_PORT = 9000;
+const LIVERELOAD = 35679;
+const HUNDRED = 100;
+const RANDOM_PORT = LIVERELOAD + parseInt(Math.random() * HUNDRED); // Randomize port for livereload.
 const DIST = 'dist';
-const version = package_json.version;
-const name = package_json.name;
+const version = packageJson.version;
+const name = packageJson.name;
 const STATIC_ASSETS = `${DIST}/${version}`;
 
 const OPTIONS = {
@@ -17,7 +21,7 @@ const OPTIONS = {
     DEPLOY_DEST: `deploy/${name}-${version}`,
     DIST_DEST: `${DIST}/`,
     FONT_SRC: 'src/fonts',
-    GULP_PORT: process.env.GULP_PORT || 9000,
+    GULP_PORT: process.env.GULP_PORT || DEFAULT_PORT,
     GULP_TASKS: 'gulp-tasks',
     GULPFILE: 'gulpfile.js',
     I18N: 'src/i18n',

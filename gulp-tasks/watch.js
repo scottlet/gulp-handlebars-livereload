@@ -1,19 +1,23 @@
 'use strict';
+
+const fancyLog = require('fancy-log');
 const gulp = require('gulp');
 const gulpLivereload = require('gulp-livereload');
-const gulpUtil = require('gulp-util');
 const CONSTS = require('./CONSTS');
+const DEBOUNCE_DELAY = 500;
 const PUBLIC = [CONSTS.IMG_SRC + '/**/!(*.svg)', CONSTS.FONT_SRC + '/**/*', CONSTS.VIDEO_SRC + '/**/*'];
 const SASS = [CONSTS.CSS_SRC_PATH + '/**/*', CONSTS.IMG_SRC + '/**/*.svg'];
 const DATA = [CONSTS.DATA_SRC + '/**/*', CONSTS.I18N + '/**/*.json'];
 
 function debounce(fn, time) {
     let to;
-    return function () {
+
+    return () => {
         let context = this;
         let args = arguments;
+
         clearTimeout(to);
-        to = setTimeout(function () {
+        to = setTimeout(() => {
             fn.apply(context, args);
         }, time);
     };
@@ -23,12 +27,16 @@ function watch() {
     gulpLivereload.listen({
         port: CONSTS.LIVERELOAD_PORT
     });
-    const watchCopiedTemplates = gulp.watch([CONSTS.TEMPLATES_DEST + '/**/*'], debounce(gulpLivereload.reload, 500));
+    const watchCopiedTemplates = gulp.watch(
+        [CONSTS.TEMPLATES_DEST + '/**/*'],
+        debounce(gulpLivereload.reload, DEBOUNCE_DELAY)
+    );
     const watchPublic = gulp.watch(PUBLIC, ['copy-lr']);
     const watchSass = gulp.watch(SASS, ['sass-watch']);
     const watchTemplates = gulp.watch([CONSTS.TEMPLATES_SRC + '/**/*'], ['buildhtml-lr']);
     const watchData = gulp.watch(DATA, ['buildhtml-lr']);
     const watchTests = gulp.watch([CONSTS.TESTS_PATH + '/**/*.js', CONSTS.JS_SERVER_SRC + '/**/*'], ['mochaTest']);
+
     [
         watchCopiedTemplates,
         watchPublic,
@@ -38,9 +46,9 @@ function watch() {
         watchTests
     ].forEach((w) => {
         w.on('change', (e) => {
-            gulpUtil.log(e.path, e.type);
+            fancyLog(e.path, e.type);
         });
     });
 }
 
-gulp.task('watch', ['build'],  watch);
+gulp.task('watch', ['build'], watch);
