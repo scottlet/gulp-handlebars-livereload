@@ -1,6 +1,6 @@
 {
   "name": "gulp-handlebars-livereload",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "private": false,
   "homepage": "https://github.com/scottbert/gulp-handlebars-livereload",
   "bugs": "https://github.com/scottbert/gulp-handlebars-livereload/issues",
