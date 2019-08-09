@@ -20,7 +20,7 @@
     "node": "4"
   },
   "dependencies": {
-    "autoprefixer": "^9.5.1",
+    "autoprefixer": "^9.6.1",
     "browserify": "^16.2.3",
     "chai": "^4.2.0",
     "css-mqpacker": "^7.0.0",
