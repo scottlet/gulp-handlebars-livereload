@@ -8,7 +8,6 @@ const {
     eslint,
     gzip,
     mochaTest: { mochaTest },
-    precompileHBs,
     sass,
     server,
     watch
@@ -22,15 +21,14 @@ const build = series(
         eslint,
         doc,
         copyStaticFiles,
-        series(buildHTML, precompileHBs, browserify),
+        series(buildHTML, browserify),
         mochaTest,
         sass
     )
 );
 
 const handlebars = series(
-    buildHTML,
-    precompileHBs
+    buildHTML
 );
 
 module.exports = {

@@ -2,11 +2,14 @@ const { src, dest } = require('gulp');
 const gulpChanged = require('gulp-changed');
 const gulpHB = require('gulp-hb');
 const gulpHtmlmin = require('gulp-htmlmin');
+const gulpLivereload = require('gulp-livereload');
 const gulpPlumber = require('gulp-plumber');
 const gulpRename = require('gulp-rename');
 const helpers = require('./template-helpers');
 const merge2 = require('merge2');
 const through2 = require('through2');
+
+const CONSTS = require('../CONSTS');
 
 function buildFiles(file, enc, callback) {
     const locale = helpers.getStem(file.path);
@@ -44,7 +47,8 @@ function buildFiles(file, enc, callback) {
         .pipe(hbStream)
         .pipe(gulpRename(helpers.renameFile))
         .pipe(gulpHtmlmin(htmlMinOptions))
-        .pipe(dest(finalPath));
+        .pipe(dest(finalPath))
+        .pipe(gulpLivereload({ port: CONSTS.LIVERELOAD_PORT }));
 
     const components = src([
         'src/components/**/index.hbs',
@@ -56,7 +60,8 @@ function buildFiles(file, enc, callback) {
         }))
         .pipe(gulpRename(helpers.renameFile))
         .pipe(gulpHtmlmin(htmlMinOptions))
-        .pipe(dest(jspath));
+        .pipe(dest(jspath))
+        .pipe(gulpLivereload({ port: CONSTS.LIVERELOAD_PORT }));
 
     return merge2(pages, components).on('finish', callback);
 }
@@ -69,7 +74,6 @@ function buildHTML() {
             errorHandler: helpers.errorHandler
         }))
         .pipe(through2.obj(buildFiles));
-
 }
 
 module.exports = buildHTML;

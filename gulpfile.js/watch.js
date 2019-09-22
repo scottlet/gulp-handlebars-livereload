@@ -2,7 +2,6 @@ const fancyLog = require('fancy-log');
 const buildHtml = require('./buildhtml');
 const doc = require('./doc');
 const eslint = require('./eslint');
-const precompileHBS = require('./precompileHBs');
 const sass = require('./sass');
 const { copyStaticFiles } = require('./copy');
 const { mochaTestLR } = require('./mochaTest');
@@ -21,11 +20,11 @@ function startWatch(cb) {
     });
     const watchPublic = watch(PUBLIC, parallel(copyStaticFiles));
     const watchSass = watch(SASS, parallel(sass));
-    const watchTemplates = watch(TEMPLATES, series(buildHtml, precompileHBS));
-    const watchData = watch(DATA, parallel(buildHtml, precompileHBS));
+    const watchTemplates = watch(TEMPLATES, series(buildHtml));
+    const watchData = watch(DATA, parallel(buildHtml));
     const watchTests = watch(CONSTS.JS_SRC + '**/*-test.js', parallel(mochaTestLR));
     const watchDocs = watch(JS, parallel(doc, eslint));
-    const watchPackages = watch('./package.json', series(buildHtml, precompileHBS));
+    const watchPackages = watch('./package.json', series(buildHtml));
 
     watchPublic.name = 'Public';
     watchSass.name = 'Sass';
