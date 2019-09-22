@@ -1,56 +1,54 @@
-'use strict';
-
 const fancyLog = require('fancy-log');
-const {watch, parallel} = require('gulp');
+const buildHtml = require('./buildhtml');
+const doc = require('./doc');
+const eslint = require('./eslint');
+const precompileHBS = require('./precompileHBs');
+const sass = require('./sass');
+const { copyStaticFiles } = require('./copy');
+const { mochaTestLR } = require('./mochaTest');
+const { parallel, series, watch } = require('gulp');
 const gulpLivereload = require('gulp-livereload');
-const {mochaTest} = require('./mochaTest');
 const CONSTS = require('./CONSTS');
-const DEBOUNCE_DELAY = 500;
-const PUBLIC = [CONSTS.IMG_SRC + '/**/!(*.svg)', CONSTS.FONT_SRC + '/**/*', CONSTS.VIDEO_SRC + '/**/*'];
-const SASS = [CONSTS.CSS_SRC_PATH + '/**/*', CONSTS.IMG_SRC + '/**/*.svg'];
-const DATA = [CONSTS.DATA_SRC + '/**/*', CONSTS.I18N + '/**/*.json'];
+const PUBLIC = [CONSTS.IMG_SRC + '/**/!(*.svg)', CONSTS.FONT_SRC + '/**/*'];
+const SASS = [CONSTS.CSS_SRC_PATH + '/**/*', CONSTS.IMG_SRC + '/**/*.svg', CONSTS.COMPONENTS_SRC + '**/*.scss'];
+const DATA = [CONSTS.DATA_SRC + '/**/*.json', CONSTS.I18N + '/**/*.json'];
+const JS = ['src/**/*.js'];
+const TEMPLATES = [CONSTS.TEMPLATES_SRC + '**/*.hbs', CONSTS.COMPONENTS_SRC + '**/*.hbs'];
 
-function debounce(fn, time) {
-    let to;
-
-    return () => {
-        let context = this;
-        let args = arguments;
-
-        clearTimeout(to);
-        to = setTimeout(() => {
-            fn.apply(context, args);
-        }, time);
-    };
-}
-
-function watchers(cb) {
+function startWatch(cb) {
     gulpLivereload.listen({
         port: CONSTS.LIVERELOAD_PORT
     });
-    const watchCopiedTemplates = watch(
-        [CONSTS.TEMPLATES_DEST + '/**/*'],
-        debounce(gulpLivereload.reload, DEBOUNCE_DELAY)
-    );
-    const watchPublic = watch(PUBLIC, parallel('copy-lr'));
-    const watchSass = watch(SASS, parallel('sass-watch'));
-    const watchTemplates = watch([CONSTS.TEMPLATES_SRC + '/**/*'], parallel('buildhtml-lr'));
-    const watchData = watch(DATA, parallel('buildhtml-lr'));
-    const watchTests = watch([CONSTS.TESTS_PATH + '/**/*.js', CONSTS.JS_SERVER_SRC + '/**/*'], parallel(mochaTest));
+    const watchPublic = watch(PUBLIC, parallel(copyStaticFiles));
+    const watchSass = watch(SASS, parallel(sass));
+    const watchTemplates = watch(TEMPLATES, series(buildHtml, precompileHBS));
+    const watchData = watch(DATA, parallel(buildHtml, precompileHBS));
+    const watchTests = watch(CONSTS.JS_SRC + '**/*-test.js', parallel(mochaTestLR));
+    const watchDocs = watch(JS, parallel(doc, eslint));
+    const watchPackages = watch('./package.json', series(buildHtml, precompileHBS));
+
+    watchPublic.name = 'Public';
+    watchSass.name = 'Sass';
+    watchData.name = 'Data';
+    watchDocs.name = 'jsDoc';
+    watchTemplates.name = 'Templates';
+    watchTests.name = 'Tests';
+    watchPackages.name = 'package.json';
 
     [
-        watchCopiedTemplates,
         watchPublic,
         watchSass,
         watchData,
+        watchDocs,
         watchTemplates,
-        watchTests
-    ].forEach((w) => {
-        w.on('change', (path) => {
-            fancyLog(`file ${path} was changed.`);
+        watchTests,
+        watchPackages
+    ].forEach(w => {
+        w.on('change', function (path) {
+            fancyLog(`file ${path} was changed. Triggered by ${this.name} watcher.`);
         });
     });
     cb();
 }
 
-module.exports = parallel(watchers);
+module.exports = startWatch;

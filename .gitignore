@@ -33,4 +33,6 @@ app/
 deploy/
 src/
 dist/
+docs/
+.tmp/compiledHandlebars/
 config.js

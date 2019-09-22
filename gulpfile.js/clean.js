@@ -1,8 +1,4 @@
-'use strict';
-
-const {sync} = require('del');
-const {task} = require('gulp');
-
+const { sync } = require('del');
 const CONSTS = require('./CONSTS');
 
 function clean(cb) {
@@ -10,5 +6,4 @@ function clean(cb) {
     cb();
 }
 
-task('clean', clean);
 module.exports = clean;

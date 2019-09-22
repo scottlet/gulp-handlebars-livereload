@@ -1,7 +1,5 @@
-'use strict';
-
 const CONSTS = require('./CONSTS');
-const {src, dest, series, task} = require('gulp');
+const { src, dest } = require('gulp');
 const gulpChanged = require('gulp-changed');
 const gulpIf = require('gulp-if');
 const gulpLivereload = require('gulp-livereload');
@@ -12,16 +10,21 @@ function copyStaticFiles() {
     return copyFilesFn(STATIC_SRC, CONSTS.STATIC_PATH, CONSTS.SRC, true);
 }
 
-function copyFilesFn(source, destination, base, reload) {
-    return src(source, {base: base || '.'})
-        .pipe(gulpChanged(destination))
-        .pipe(dest(destination))
+function copyFilesFn(srcdir, destdir, base, reload) {
+    return src(srcdir, { base: base || '.' })
+        .pipe(gulpChanged(destdir))
+        .pipe(dest(destdir))
         .pipe(gulpIf(reload, gulpLivereload({
             port: CONSTS.LIVERELOAD_PORT
         })));
 }
 
-task('copystatic', series(copyStaticFiles));
-task('copy-lr', copyStaticFiles);
+function copyDeploy() {
+    return src([CONSTS.DIST_DEST + '/**/*'], { base: 'dist' })
+        .pipe(dest(CONSTS.DEPLOY_DEST));
+}
 
-module.exports = series('copystatic');
+module.exports = {
+    copyStaticFiles,
+    copyDeploy
+};

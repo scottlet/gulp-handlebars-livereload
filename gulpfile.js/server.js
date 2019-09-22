@@ -1,35 +1,34 @@
-'use strict';
-
 /*eslint-disable no-console*/
-const {series, parallel} = require('gulp');
-const browserify = require('./browserify');
 const connectLivereload = require('connect-livereload');
-const CONSTS = require('./CONSTS');
-const copy = require('./copy');
-const gulpConnect = require('gulp-connect');
-const sass = require('./sass');
-const watch = require('./watch');
-
+const { GULP_PORT, LIVERELOAD_PORT } = require('./CONSTS');
+const { server } = require('gulp-connect');
 
 function makeServer(cb) {
-    const port = CONSTS.GULP_PORT;
+    const DOC_PORT = 9001;
 
-    gulpConnect.server({
-        port,
+    server({
+        port: GULP_PORT,
         host: '0.0.0.0',
         root: './dist',
-        middleware: (server) => {
+        middleware: server => {
             return [
                 connectLivereload({
-                    port: CONSTS.LIVERELOAD_PORT
+                    port: LIVERELOAD_PORT
                 })
             ];
         }
     });
-    console.log('server http://127.0.0.1:' + port);
+    console.log('server http://127.0.0.1:' + GULP_PORT);
+    server({
+        port: DOC_PORT,
+        host: '0.0.0.0',
+        root: './docs/gen',
+        livereload: {
+            port: LIVERELOAD_PORT
+        }
+    });
+    console.log('Documentation server http://127.0.0.1:' + DOC_PORT);
     cb();
 }
 
-const before = parallel(copy, browserify, sass, watch);
-
-module.exports = series(before, makeServer);
+module.exports = makeServer;

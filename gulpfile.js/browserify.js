@@ -1,85 +1,113 @@
-'use strict';
-
 const browserify = require('browserify');
 const CONSTS = require('./CONSTS');
-const BREAKPOINTS = CONSTS.BREAKPOINTS || {};
+const fancyLog = require('fancy-log');
 const glob = require('glob');
-const {dest, parallel, task} = require('gulp');
+const { dest } = require('gulp');
 const gulpIf = require('gulp-if');
 const gulpLivereload = require('gulp-livereload');
-const {onError} = require('gulp-notify');
+const { onError } = require('gulp-notify');
 const gulpPlumber = require('gulp-plumber');
 const gulpReplace = require('gulp-replace');
-const gulpSourcemaps = require('gulp-sourcemaps');
-const gulpUglify = require('gulp-uglify');
-const fancyLog = require('fancy-log');
+const merge2 = require('merge2');
 const vinylBuffer = require('vinyl-buffer');
 const vinylSourceStream = require('vinyl-source-stream');
 const watchify = require('watchify');
 
 const isDev = CONSTS.NODE_ENV !== 'production';
 
-let entries = glob.sync(CONSTS.JS_SRC + '*.js');
+const entries = glob.sync(CONSTS.JS_SRC + '*.js');
 
-function addToBrowserify(entry) {
-    let options = {
-        entries:  [entry],
-        cache: {},
-        packageCache: {}
-    };
-    let name = entry.replace(/.*\/(\w+).js/, '$1');
-    let uglifyOptions = {
-        compress: {
-            drop_console: true //eslint-disable-line
+function addToBrowserify(locale) {
+    let localeStr = locale.replace('en', '');
+
+    localeStr = localeStr !== '' ? localeStr += '/' : localeStr;
+
+    return function (entry) {
+
+        const options = {
+            builtins: {},
+            entries:  [entry],
+            cache: {},
+            debug: !!isDev,
+            packageCache: {},
+            paths: [
+                `./${CONSTS.JS_SRC}modules`,
+                `./${CONSTS.COMPONENTS_SRC}`,
+                './.tmp/'
+            ],
+            transform: [
+                ['browserify-replace', {
+                    replace: [
+                        { from: /\$lang\//g, to: localeStr }
+                    ]
+                }]
+            ]
+        };
+
+        const name = entry.replace('-$lang', '-' + locale).replace('$name', CONSTS.NAME)
+            .replace(/.*\/([\w$\-.]+).js/, '$1');
+
+        const b = browserify(options);
+
+        if (isDev) {
+            b.transform('babelify', { presets: ['@babel/preset-env'], sourceMaps: true });
+            b.plugin(watchify, { delay: 1000 });
+        } else {
+            b.transform('babelify', { presets: ['@babel/preset-env'] });
+            b.plugin('tinyify', { flat: false });
         }
-    };
 
-    if (isDev) {
-        options.plugin = [watchify];
-        delete uglifyOptions.compress.drop_console;
-    }
+        function doLR() {
+            if (process.env.OVERRIDE_LR === 'true') {
+                return false;
+            }
 
-    let b = browserify(options);
+            process.env.OVERRIDE_LR = 'true';
 
-    function doLR() {
-        if (process.env.OVERRIDE_LR === 'true') {
-            return false;
+            setTimeout(() => {
+                process.env.OVERRIDE_LR = 'false';
+            }, 500);
+
+            return isDev;
         }
 
-        return isDev;
-    }
+        function bundle() {
+            fancyLog(`start bundle ${name}.js`);
 
-    function bundle() {
-        return b.bundle()
-            .pipe(gulpPlumber({errorHandler: onError('Bundle Error: <%= error.message %>')}))
-            .pipe(vinylSourceStream(name + CONSTS.JS_OUTPUT))
-            .pipe(vinylBuffer())
-            .pipe(gulpReplace('$$oldMobile$$', BREAKPOINTS.OLD_MOBILE))
-            .pipe(gulpReplace('$$mobile$$', BREAKPOINTS.MOBILE))
-            .pipe(gulpReplace('$$smalltablet$$', BREAKPOINTS.SMALL_TABLET))
-            .pipe(gulpReplace('$$tablet$$', BREAKPOINTS.TABLET))
-            .pipe(gulpReplace('$$smalldesktop$$', BREAKPOINTS.SMALL_DESKTOP))
-            .pipe(gulpSourcemaps.init({loadMaps: true}))
-            .pipe(gulpUglify(uglifyOptions))
-            .pipe(gulpIf(isDev, gulpSourcemaps.write()))
-            .pipe(dest(CONSTS.JS_DEST))
-            .pipe(gulpIf(doLR(), gulpLivereload({
-                port: CONSTS.LIVERELOAD_PORT
-            })));
-    }
+            return b
+                .bundle()
+                .pipe(gulpPlumber({ errorHandler: onError('Bundle Error: <%= error.message %>') }))
+                .pipe(vinylSourceStream(name + CONSTS.JS_OUTPUT))
+                .pipe(vinylBuffer())
+                .pipe(gulpReplace('$$API$$', CONSTS.API))
+                .pipe(gulpReplace('$$oldMobile$$', CONSTS.BREAKPOINTS.OLD_MOBILE))
+                .pipe(gulpReplace('$$mobile$$', CONSTS.BREAKPOINTS.MOBILE))
+                .pipe(gulpReplace('$$smalltablet$$', CONSTS.BREAKPOINTS.SMALL_TABLET))
+                .pipe(gulpReplace('$$tablet$$', CONSTS.BREAKPOINTS.TABLET))
+                .pipe(gulpReplace('$$smalldesktop$$', CONSTS.BREAKPOINTS.SMALL_DESKTOP))
+                .pipe(dest(CONSTS.JS_DEST))
+                .pipe(gulpIf(doLR(), gulpLivereload({
+                    port: CONSTS.LIVERELOAD_PORT
+                })));
+        }
 
-    b.on('update', bundle);
-    b.on('log', fancyLog);
-    b.on('error', fancyLog);
-    bundle();
+        b.on('update', bundle);
+        b.on('log', fancyLog);
+        b.on('error', fancyLog);
+
+        return bundle();
+    };
 }
 
-function createJSBundles(cb) {
-    entries.forEach(addToBrowserify);
-    cb();
-}
+function createJSBundles() {
+    let tasks = [];
 
-task('browserify', parallel(createJSBundles));
+    CONSTS.LANGS.forEach(locale => {
+        tasks = tasks.concat(entries.map(addToBrowserify(locale)));
+    });
+
+    return merge2(tasks);
+}
 
 
 module.exports = createJSBundles;

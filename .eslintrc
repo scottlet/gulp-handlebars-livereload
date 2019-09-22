@@ -3,14 +3,23 @@
         "node": true,
         "es6": true
     },
-    "globals": {
-        "$": false
-    },
     "plugins": [
+        "import"
     ],
+    "settings": {
+        "import/resolver": "node"
+    },
     "extends": "eslint:recommended",
+    "parserOptions": {
+        "sourceType": "module",
+        "ecmaVersion": "2018"
+    },
     "rules": {
         "array-bracket-spacing": 1,
+        "arrow-parens": [
+            2,
+            "as-needed"
+        ],
         "block-scoped-var": 2,
         "block-spacing": 2,
         "brace-style": 2,
@@ -64,11 +73,13 @@
         "no-magic-numbers": [
             2,
             {
+                "enforceConst": true,
                 "ignoreArrayIndexes": true,
-                "ignore": [-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+                "ignore": [-1, .1, .2, .3, .4, .5, .6, .7, .8, .9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 50, 100, 255, 256, 500, 512, 1000]
             }
         ],
         "no-multi-spaces": 2,
+        "no-multiple-empty-lines": 2,
         "no-redeclare": 1,
         "no-trailing-spaces": 2,
         "no-underscore-dangle": 2,
@@ -80,14 +91,22 @@
             }
         ],
         "no-useless-return": 2,
+        "object-curly-spacing": [
+            2,
+            "always"
+        ],
+        "object-shorthand": 2,
         "one-var": [
             2,
             "never"
         ],
         "padding-line-between-statements": [
             2,
-            { "blankLine": "always", "prev": "block-like", "next": "*" }
+            { "blankLine": "always", "prev": "block-like", "next": "*" },
+            { "blankLine": "always", "prev": "*", "next": "block-like" }
         ],
+        "prefer-arrow-callback": 2,
+        "prefer-const": 2,
         "quotes": [
             2,
             "single",
@@ -99,7 +118,7 @@
         ],
         "space-infix-ops": 2,
         "linebreak-style": [
-            2,
+            1,
             "unix"
         ],
         "semi": [
@@ -116,11 +135,13 @@
         ],
         "keyword-spacing": 2,
         "space-before-blocks": 2,
+        "no-var": 2,
         "strict": [
             2,
             "global"
         ],
         "valid-jsdoc": 2,
-        "vars-on-top": 1
+        "vars-on-top": 1,
+        "import/no-unresolved": [2]
     }
 }

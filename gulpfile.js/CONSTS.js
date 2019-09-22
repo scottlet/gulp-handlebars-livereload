@@ -1,5 +1,3 @@
-'use strict';
-
 const fs = require('fs');
 const packageJson = JSON.parse(fs.readFileSync('./package.json'));
 const DEFAULT_PORT = 9000;
@@ -13,8 +11,18 @@ const STATIC_ASSETS = `${DIST}/${version}`;
 
 const OPTIONS = require('../src/options');
 
+const langs = fs.readdirSync('./src/i18n/').map(file => {
+    return file.replace('.json', '');
+});
+
 const CONSTS = {
-    BROWSER_CONFIG: ['> 1%', 'IE 11'],
+    BREAKPOINTS: {
+        OLD_MOBILE: 320,
+        MOBILE: 767,
+        SMALL_TABLET: 600,
+        TABLET: 979,
+        SMALL_DESKTOP: 1440
+    },
     BUILD_DIST: 'zip/',
     BUILD_DEST: 'dist/',
     CSS_DEST_PATH: `${STATIC_ASSETS}/css`,
@@ -32,6 +40,7 @@ const CONSTS = {
     JS_DEST: `${STATIC_ASSETS}/js`,
     JS_OUTPUT: '.min.js',
     JS_SRC: 'src/js/',
+    LANGS: langs,
     LIVERELOAD_PORT: process.env.LIVERELOAD_PORT || RANDOM_PORT,
     NODE_ENV: process.env.NODE_ENV,
     SRC: 'src',
