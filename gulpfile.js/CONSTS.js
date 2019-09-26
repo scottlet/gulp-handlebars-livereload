@@ -5,11 +5,12 @@ const LIVERELOAD = 35679;
 const HUNDRED = 100;
 const RANDOM_PORT = LIVERELOAD + parseInt(Math.random() * HUNDRED); // Randomize port for livereload.
 const DIST = 'dist';
-const version = packageJson.version;
-const name = packageJson.name;
-const STATIC_ASSETS = `${DIST}/${version}`;
 
 const OPTIONS = require('../src/options');
+
+const version = OPTIONS.VERSION || packageJson.version;
+const name = OPTIONS.NAME || packageJson.name;
+const STATIC_ASSETS = `${DIST}/${version}`;
 
 const langs = fs.readdirSync('./src/i18n/').map(file => {
     return file.replace('.json', '');
@@ -47,7 +48,8 @@ const CONSTS = {
     STATIC_PATH: `${STATIC_ASSETS}/`,
     TEMPLATES_DEST:`${DIST}/`,
     TEMPLATES_SRC:'src/templates/',
-    TESTS_PATH: 'src/tests/'
+    TESTS_PATH: 'src/tests/',
+    VIDEO_SRC: 'src/video'
 };
 
 module.exports = Object.assign(CONSTS, OPTIONS);

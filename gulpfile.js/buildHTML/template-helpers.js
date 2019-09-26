@@ -3,8 +3,6 @@ const CONSTS = require('../CONSTS');
 const handlebars = require('handlebars');
 const nodeNotify = require('node-notifier');
 const i18n2 = require('i18n-2');
-const fs = require('fs');
-const { version } = JSON.parse(fs.readFileSync('./package.json'));
 
 const staticHelpers = {
     uc: str => {
@@ -88,7 +86,7 @@ const staticHelpers = {
     production() {
         return CONSTS.NODE_ENV === 'production';
     },
-    version
+    version: CONSTS.VERSION
 };
 
 let errorShown;
@@ -130,11 +128,11 @@ function pathBuilder(locale) {
         });
 
         if (staticasset) {
-            urlparts.push(version);
+            urlparts.push(CONSTS.VERSION);
         }
 
         if (staticasset) {
-            newPath = '/' + version + '/' + newPath;
+            newPath = '/' + CONSTS.VERSION + '/' + newPath;
         } else {
             newPath = (urlparts.length ? urlparts.join('/') + '/' : '') + newPath;
         }
