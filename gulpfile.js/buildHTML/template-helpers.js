@@ -137,8 +137,8 @@ function pathBuilder(locale) {
             newPath = (urlparts.length ? urlparts.join('/') + '/' : '') + newPath;
         }
 
-        console.log('filePath', data.data.file.relative);
-        console.log('orig assetpath', assetPath, 'new assetpath', newPath);
+        // console.log('filePath', data.data.file.relative);
+        // console.log('orig assetpath', assetPath, 'new assetpath', newPath);
 
         return newPath || '/';
     };
