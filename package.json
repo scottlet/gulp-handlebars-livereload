@@ -38,7 +38,7 @@
     "gulp": "^4",
     "gulp-brotli": "^1.2.2",
     "gulp-changed": "^4.0.1",
-    "gulp-cheerio": "^0.6.3",
+    "gulp-cheerio": "^1.0.0",
     "gulp-connect": "^5.7.0",
     "gulp-define-module": "^0.1.5",
     "gulp-eslint": "^6.0.0",
