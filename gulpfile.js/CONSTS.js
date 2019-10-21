@@ -16,7 +16,7 @@ const langs = fs.readdirSync('./src/i18n/').map(file => {
     return file.replace('.json', '');
 });
 
-const CONSTS = {
+const CONSTS = Object.assign({
     BREAKPOINTS: {
         OLD_MOBILE: 320,
         MOBILE: 767,
@@ -43,13 +43,15 @@ const CONSTS = {
     JS_SRC: 'src/js/',
     LANGS: langs,
     LIVERELOAD_PORT: process.env.LIVERELOAD_PORT || RANDOM_PORT,
+    NAME: OPTIONS.NAME || name,
     NODE_ENV: process.env.NODE_ENV,
     SRC: 'src',
     STATIC_PATH: `${STATIC_ASSETS}/`,
     TEMPLATES_DEST:`${DIST}/`,
     TEMPLATES_SRC:'src/templates/',
     TESTS_PATH: 'src/tests/',
+    VERSION: OPTIONS.VERSION || version,
     VIDEO_SRC: 'src/video'
-};
+}, OPTIONS);
 
-module.exports = Object.assign(CONSTS, OPTIONS);
+module.exports = CONSTS;
