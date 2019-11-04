@@ -79,6 +79,7 @@ function addToBrowserify(locale) {
                 .pipe(gulpPlumber({ errorHandler: onError('Bundle Error: <%= error.message %>') }))
                 .pipe(vinylSourceStream(name + CONSTS.JS_OUTPUT))
                 .pipe(vinylBuffer())
+                .pipe(gulpReplace('$$version$$', CONSTS.VERSION))
                 .pipe(gulpReplace('$$API$$', CONSTS.API))
                 .pipe(gulpReplace('$$oldMobile$$', CONSTS.BREAKPOINTS.OLD_MOBILE))
                 .pipe(gulpReplace('$$mobile$$', CONSTS.BREAKPOINTS.MOBILE))
