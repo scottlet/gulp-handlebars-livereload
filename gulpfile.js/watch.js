@@ -5,7 +5,7 @@ const eslint = require('./eslint');
 const sass = require('./sass');
 const { copyStaticFiles } = require('./copy');
 const { mochaTestLR } = require('./mochaTest');
-const { parallel, series, watch } = require('gulp');
+const { parallel, watch } = require('gulp');
 const gulpLivereload = require('gulp-livereload');
 const CONSTS = require('./CONSTS');
 const PUBLIC = [CONSTS.IMG_SRC + '/**/!(*.svg)', CONSTS.FONT_SRC + '/**/*', CONSTS.JSON_SRC + '/**/*'];
@@ -18,13 +18,13 @@ function startWatch(cb) {
     gulpLivereload.listen({
         port: CONSTS.LIVERELOAD_PORT
     });
-    const watchPublic = watch(PUBLIC, parallel(copyStaticFiles));
-    const watchSass = watch(SASS, parallel(sass));
-    const watchTemplates = watch(TEMPLATES, series(buildHtml));
-    const watchData = watch(DATA, parallel(buildHtml));
-    const watchTests = watch(CONSTS.JS_SRC + '**/*-test.js', parallel(mochaTestLR));
+    const watchPublic = watch(PUBLIC, copyStaticFiles);
+    const watchSass = watch(SASS, sass);
+    const watchTemplates = watch(TEMPLATES, { delay: 250 }, buildHtml);
+    const watchData = watch(DATA, buildHtml);
+    const watchTests = watch(CONSTS.JS_SRC + '**/*-test.js', mochaTestLR);
     const watchDocs = watch(JS, parallel(doc, eslint));
-    const watchPackages = watch('./package.json', series(buildHtml));
+    const watchPackages = watch('./package.json', buildHtml);
 
     watchPublic.name = 'Public';
     watchSass.name = 'Sass';
