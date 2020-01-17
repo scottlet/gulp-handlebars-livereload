@@ -68,7 +68,7 @@
     "postcss-normalize": "^8.0.1",
     "postcss-preset-env": "^6.7.0",
     "require-dir": "^1.2.0",
-    "sinon": "^7.5.0",
+    "sinon": "^8.1.0",
     "tinyify": "^2.5.2",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0",
