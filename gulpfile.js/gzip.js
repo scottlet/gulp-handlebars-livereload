@@ -1,5 +1,3 @@
-'use strict';
-
 const CONSTS = require('./CONSTS');
 const { src, dest } = require('gulp');
 const gulpGZip = require('gulp-gzip');

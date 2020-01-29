@@ -31,7 +31,7 @@ npm-debug.log
 
 app/
 deploy/
-src/
+#src/
 dist/
 docs/
 .tmp/compiledHandlebars/
