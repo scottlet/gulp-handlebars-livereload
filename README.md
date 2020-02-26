@@ -8,7 +8,7 @@ If you have homebrew installed on OSX this is as simple as `brew install node`.
 
 If you don't have homebrew on OSX, visit http://brew.sh
 
-To run the demo, additionally check out https://github.com/scottbert/gulp-handlebars-livereload-src-example then copy into the root of this folder as "src"
+To run the demo, additionally check out https://github.com/scottbert/gulp-handlebars-livereload-src-example then copy into the root of this folder as "src" (This is now included by default as a git submodule)
 
 Do ```npm install```
 
@@ -24,3 +24,4 @@ Then ```gulp``` to run the livereload local server ( [http://localhost:9000](htt
 * Livereload - any change to any of the source files will be almost instantly reflected in a browser
 * Serve to your local network - ```ifconfig``` (or ```ipconfig``` on PC) will tell you your IP address, ```http://<ip address>:9000``` will work on most networks.
 * Static resources precompressed with both brotli and gzip to serve using nginx or apache - [How To Enable GZIP & Brotli Compression for Nginx on Linux](https://computingforgeeks.com/how-to-enable-gzip-brotli-compression-for-nginx-on-linux/) or [Precompress a static website with Brotli and Gzip](https://damien.pobel.fr/post/precompress-brotli-gzip-static-site/) for apache
+* Breakpoints shared between CSS and JS
