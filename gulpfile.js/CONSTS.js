@@ -17,13 +17,6 @@ const langs = fs.readdirSync('./src/i18n/').map(file => {
 });
 
 const CONSTS = Object.assign({
-    BREAKPOINTS: {
-        OLD_MOBILE: 320,
-        MOBILE: 767,
-        SMALL_TABLET: 600,
-        TABLET: 979,
-        SMALL_DESKTOP: 1440
-    },
     BUILD_DIST: 'zip/',
     BUILD_DEST: 'dist/',
     CSS_DEST_PATH: `${STATIC_ASSETS}/css`,
