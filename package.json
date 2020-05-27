@@ -23,7 +23,7 @@
     "node": "4"
   },
   "dependencies": {
-    "@babel/core": "^7.9.0",
+    "@babel/core": "^7.10.0",
     "@babel/preset-env": "^7.9.0",
     "autoprefixer": "^9.7.5",
     "babelify": "^10.0.0",
