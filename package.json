@@ -34,7 +34,7 @@
     "csswring": "^7.0.0",
     "del": "^5.1.0",
     "eslint-plugin-import": "^2.20.2",
-    "eslint-plugin-jsdoc": "^22.1.0",
+    "eslint-plugin-jsdoc": "^27.1.2",
     "fancy-log": "^1.3.3",
     "gulp": "^4",
     "gulp-brotli": "^2.0.2",
