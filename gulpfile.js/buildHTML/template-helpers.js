@@ -102,10 +102,13 @@ function imagePathBuilder(locale) {
 }
 
 function pathBuilder(locale) {
+    let staticLocale = '';
+
     if (locale === 'en') {
-        locale = '/';
+        locale = '';
     } else {
-        locale = '/' + locale + '/';
+        locale = '../' + locale + '/';
+        staticLocale = '../';
     }
 
     return (assetPath, data) => {
@@ -132,7 +135,7 @@ function pathBuilder(locale) {
         }
 
         if (staticasset) {
-            newPath = '/' + CONSTS.VERSION + '/' + newPath;
+            newPath = staticLocale + CONSTS.VERSION + '/' + newPath;
         } else {
             newPath = (urlparts.length ? urlparts.join('/') + '/' : '') + newPath;
         }
