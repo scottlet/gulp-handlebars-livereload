@@ -22,6 +22,7 @@ const CONSTS = Object.assign({
     CSS_DEST_PATH: `${STATIC_ASSETS}/css`,
     CSS_SRC_PATH: 'src/sass',
     DATA_SRC: 'src/data',
+    DEPLOY_TARGET: 'deploy/',
     DEPLOY_DEST: `deploy/${name}-${version}`,
     DIST_DEST: `${DIST}/`,
     FONT_SRC: 'src/fonts',
