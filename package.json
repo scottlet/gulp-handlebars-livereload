@@ -70,7 +70,7 @@
     "postcss-preset-env": "^6.7.0",
     "require-dir": "^1.2.0",
     "sinon": "^9.0.2",
-    "tinyify": "^2.5.2",
+    "tinyify": "^3.0.0",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0",
     "watchify": "^3.11.1"
