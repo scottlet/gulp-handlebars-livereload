@@ -29,7 +29,7 @@
   "dependencies": {
     "@babel/core": "^7.12.3",
     "@babel/preset-env": "^7.12.1",
-    "autoprefixer": "^10.0.1",
+    "autoprefixer": "^10.0.2",
     "babelify": "^10.0.0",
     "browserify": "^17.0.0",
     "browserify-replace": "^1.0.1",
