@@ -60,7 +60,7 @@
     "gulp-replace": "^1.0.0",
     "gulp-sass": "^4.1.0",
     "gulp-sass-variables": "^1.2.0",
-    "gulp-sourcemaps": "^2.6.5",
+    "gulp-sourcemaps": "^3.0.0",
     "gulp-spawn-mocha": "^6.0.0",
     "gulp-uglify": "^3.0.2",
     "gulp-wait": "0.0.2",
