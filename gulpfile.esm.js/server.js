@@ -1,7 +1,9 @@
-const fancyLog = require('fancy-log');
-const connectLivereload = require('connect-livereload');
-const { GULP_PORT, LIVERELOAD_PORT } = require('./CONSTS');
-const { server } = require('gulp-connect');
+import fancyLog from 'fancy-log';
+import connectLivereload from 'connect-livereload';
+import { server } from 'gulp-connect';
+import { CONSTS } from './CONSTS';
+
+const { GULP_PORT, LIVERELOAD_PORT } = CONSTS;
 
 function makeServer(cb) {
     const DOC_PORT = 9001;
@@ -10,7 +12,7 @@ function makeServer(cb) {
         port: GULP_PORT,
         host: '0.0.0.0',
         root: './dist',
-        middleware: server => {
+        middleware: () => {
             return [
                 connectLivereload({
                     port: LIVERELOAD_PORT
@@ -31,4 +33,4 @@ function makeServer(cb) {
     cb();
 }
 
-module.exports = makeServer;
+export { makeServer as server };

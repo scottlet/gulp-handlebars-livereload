@@ -7,12 +7,25 @@
         "import"
     ],
     "settings": {
-        "import/resolver": "node"
+        "import/resolver": {
+            "node": {
+                "paths": ["src/js/modules/"]
+            }
+        }
     },
-    "extends": "eslint:recommended",
+    "extends": [
+        "eslint:recommended",
+        "plugin:import/errors",
+        "plugin:import/warnings",
+        "plugin:import/react",
+        "plugin:react/recommended",
+        "plugin:prettier/recommended",
+        "prettier",
+        "prettier/react"
+    ],
     "parserOptions": {
         "sourceType": "module",
-        "ecmaVersion": "2018"
+        "ecmaVersion": "2020"
     },
     "rules": {
         "array-bracket-spacing": 1,
@@ -68,7 +81,6 @@
         "no-else-return": 2,
         "no-eval": 2,
         "no-extend-native": 2,
-        "no-extra-parens": 2,
         "no-loop-func": 2,
         "no-magic-numbers": [
             2,

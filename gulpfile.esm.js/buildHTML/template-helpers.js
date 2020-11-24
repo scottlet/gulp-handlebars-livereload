@@ -1,8 +1,10 @@
-const CONSTS = require('../CONSTS');
+import handlebars from 'handlebars';
+import nodeNotify from 'node-notifier';
+import i18n2 from 'i18n-2';
 
-const handlebars = require('handlebars');
-const nodeNotify = require('node-notifier');
-const i18n2 = require('i18n-2');
+import { CONSTS } from '../CONSTS';
+
+const { LANGS, HOST, PATH, NODE_ENV, NAME, VERSION } = CONSTS;
 
 const staticHelpers = {
     uc: str => {
@@ -46,7 +48,7 @@ const staticHelpers = {
 
         return options.inverse(this);
     },
-    prev : (num, total) => {
+    prev: (num, total) => {
         num--;
 
         if (num < 1) {
@@ -55,7 +57,7 @@ const staticHelpers = {
 
         return num;
     },
-    next : (num, total) => {
+    next: (num, total) => {
         num++;
 
         if (num > total) {
@@ -78,15 +80,16 @@ const staticHelpers = {
         return accum;
     },
     hostname() {
-        return CONSTS.HOST;
+        return HOST;
     },
     hostpath() {
-        return CONSTS.PATH;
+        return PATH;
     },
     production() {
-        return CONSTS.NODE_ENV === 'production';
+        return NODE_ENV === 'production';
     },
-    version: CONSTS.VERSION
+    name: NAME,
+    version: VERSION
 };
 
 let errorShown;
@@ -116,7 +119,9 @@ function pathBuilder(locale) {
         const urlparts = [];
         let newPath = assetPath.replace(/^\//, '');
 
-        const staticasset = /^(pdfs|css|js|images|fonts|video|audio)/.test(newPath);
+        const staticasset = /^(pdfs|css|js|images|fonts|video|audio)/.test(
+            newPath
+        );
         let myPath = data.data.file.relative;
 
         if (staticasset) {
@@ -131,13 +136,14 @@ function pathBuilder(locale) {
         });
 
         if (staticasset) {
-            urlparts.push(CONSTS.VERSION);
+            urlparts.push(VERSION);
         }
 
         if (staticasset) {
-            newPath = staticLocale + CONSTS.VERSION + '/' + newPath;
+            newPath = staticLocale + VERSION + '/' + newPath;
         } else {
-            newPath = (urlparts.length ? urlparts.join('/') + '/' : '') + newPath;
+            newPath =
+                (urlparts.length ? urlparts.join('/') + '/' : '') + newPath;
         }
 
         // console.log('filePath', data.data.file.relative);
@@ -179,7 +185,7 @@ function getStaticHelpers() {
 
 function getDynamicHelpers(locale) {
     const i18n = new i18n2({
-        locales: CONSTS.LANGS,
+        locales: LANGS,
         defaultLocale: 'en',
         extension: '.json',
         directory: './src/i18n',
@@ -231,7 +237,7 @@ function getDynamicHelpers(locale) {
     };
 }
 
-module.exports = {
+export {
     getStaticHelpers,
     errorHandler,
     renameFile,
