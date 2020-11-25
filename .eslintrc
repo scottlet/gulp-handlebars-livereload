@@ -4,13 +4,17 @@
         "es6": true
     },
     "plugins": [
-        "import"
+        "import",
+        "react"
     ],
     "settings": {
         "import/resolver": {
             "node": {
                 "paths": ["src/js/modules/"]
             }
+        },
+        "react": {
+            "version": "999.999.999"
         }
     },
     "extends": [

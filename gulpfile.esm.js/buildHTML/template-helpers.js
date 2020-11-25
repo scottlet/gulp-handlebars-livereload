@@ -33,20 +33,20 @@ const staticHelpers = {
 
         return strings;
     },
-    raw: options => {
-        return options.fn();
+    raw: ({ fn }) => {
+        return fn();
     },
 
     q: txt => {
         return new handlebars.SafeString(`'${txt}'`);
     },
 
-    eq: (val1, val2, options) => {
+    eq: (val1, val2, { fn, inverse }) => {
         if (val1 == val2) {
-            return options.fn(this);
+            return fn(this);
         }
 
-        return options.inverse(this);
+        return inverse(this);
     },
     prev: (num, total) => {
         num--;
@@ -66,15 +66,15 @@ const staticHelpers = {
 
         return num;
     },
-    times: (n, block) => {
+    times: (n, { data, fn }) => {
         let accum = '';
         let i;
 
         for (i = 0; i < n; ++i) {
-            block.data.first = i === 0;
-            block.data.last = i === n - 1;
-            block.data.index = i;
-            accum += block.fn(i);
+            data.first = i === 0;
+            data.last = i === n - 1;
+            data.index = i;
+            accum += fn(i);
         }
 
         return accum;
@@ -98,7 +98,7 @@ function imagePathBuilder(locale) {
     const builder = pathBuilder(locale);
 
     return (assetPath, data) => {
-        assetPath = 'images/' + assetPath;
+        assetPath = `images/${assetPath}`;
 
         return builder(assetPath, data);
     };
@@ -110,7 +110,7 @@ function pathBuilder(locale) {
     if (locale === 'en') {
         locale = '';
     } else {
-        locale = '../' + locale + '/';
+        locale = `../${locale}/`;
         staticLocale = '../';
     }
 
@@ -130,7 +130,6 @@ function pathBuilder(locale) {
 
         myPath.split('/').forEach((part, idx) => {
             if (idx && !staticasset) {
-                //        console.log('EHAT', idx);
                 urlparts.push(join);
             }
         });
@@ -140,14 +139,11 @@ function pathBuilder(locale) {
         }
 
         if (staticasset) {
-            newPath = staticLocale + VERSION + '/' + newPath;
+            newPath = `${staticLocale}${VERSION}/${newPath}`;
         } else {
             newPath =
-                (urlparts.length ? urlparts.join('/') + '/' : '') + newPath;
+                (urlparts.length ? `${urlparts.join('/')}/` : '') + newPath;
         }
-
-        // console.log('filePath', data.data.file.relative);
-        // console.log('orig assetpath', assetPath, 'new assetpath', newPath);
 
         return newPath || '/';
     };
@@ -166,7 +162,7 @@ function renameFile(path) {
 function errorHandler(error) {
     if (!errorShown) {
         nodeNotify.notify({
-            message: 'Error: ' + error.message,
+            message: `Error: ${error.message}`,
             title: 'Gulp HTML Build',
             onLast: true
         });
@@ -203,7 +199,7 @@ function getDynamicHelpers(locale) {
 
     function trans(text) { //eslint-disable-line
         let desktop = i18n.__(text); //eslint-disable-line
-        let mobile = i18n.__(text + '_mobile'); //eslint-disable-line
+        let mobile = i18n.__(`${text}_mobile`); //eslint-disable-line
 
         if (mobile.replace(/_mobile/gi, '') !== text) {
             return `

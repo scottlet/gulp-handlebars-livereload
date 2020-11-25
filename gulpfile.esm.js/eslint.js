@@ -1,6 +1,6 @@
 import { src } from 'gulp';
 import gulpESLint from 'gulp-eslint';
-import gulpNotify from 'gulp-notify';
+import { onError } from 'gulp-notify';
 import gulpPlumber from 'gulp-plumber';
 import { CONSTS } from './CONSTS';
 
@@ -10,9 +10,7 @@ function lint() {
     return src([GULPFILE, `${GULP_TASKS}/**/*.js`, `${JS_SRC}/**/*.js`])
         .pipe(
             gulpPlumber({
-                errorHandler: gulpNotify.onError(
-                    'ESLint Error: <%= error.message %>'
-                )
+                errorHandler: onError('ESLint Error: <%= error.message %>')
             })
         )
         .pipe(gulpESLint())

@@ -1,5 +1,7 @@
-import jsdoc from 'gulp-jsdoc3';
+import { onError } from 'gulp-notify';
 import { src } from 'gulp';
+import gulpPlumber from 'gulp-plumber';
+import jsdoc from 'gulp-jsdoc3';
 import { CONSTS } from './CONSTS';
 
 function doc(cb) {
@@ -10,7 +12,13 @@ function doc(cb) {
             `!${CONSTS.SRC}/node_modules/**/*`
         ],
         { read: false }
-    ).pipe(jsdoc(cb));
+    )
+        .pipe(
+            gulpPlumber({
+                errorHandler: onError('jsdoc3 error: <%= error.message %>')
+            })
+        )
+        .pipe(jsdoc(cb));
 }
 
 export { doc };

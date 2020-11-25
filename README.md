@@ -10,7 +10,7 @@ If you don't have homebrew on OSX, visit http://brew.sh
 
 To run the demo, additionally check out https://github.com/scottbert/gulp-handlebars-livereload-src-example then copy into the root of this folder as "src" (This is now included by default as a git submodule)
 
-Do `npm install`
+NPM pre 7: `npm install` - NPM 7 and above: `npm install --legacy-peer-deps`
 
 Then `npm run develop` to run the livereload local server ( [http://localhost:9000](http://localhost:9000) )
 
