@@ -20,8 +20,8 @@ import {
 
 const { LIVERELOAD_PORT } = CONSTS;
 
-function buildFiles(file, enc, callback) {
-    const locale = getStem(file.path);
+function buildFiles({ path }, enc, callback) {
+    const locale = getStem(path);
     const finalPath = 'dist' + (locale === 'en' ? '' : '/' + locale);
     const jspath = 'dist/tmp' + (locale === 'en' ? '' : '/' + locale);
     const dynamicHelpers = getDynamicHelpers(locale);

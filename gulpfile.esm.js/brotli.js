@@ -1,13 +1,20 @@
 import { CONSTS } from './CONSTS';
 import { src, dest } from 'gulp';
-import gulpBrotli from 'gulp-brotli';
+import { compress } from 'gulp-brotli';
+import { onError } from 'gulp-notify';
+import gulpPlumber from 'gulp-plumber';
 
 const { DEPLOY_DEST } = CONSTS;
 
 function brotli() {
     return src(DEPLOY_DEST + '/**/*.{css,svg,js,html}')
         .pipe(
-            gulpBrotli.compress({
+            gulpPlumber({
+                errorHandler: onError('brotli Error: <%= error.message %>')
+            })
+        )
+        .pipe(
+            compress({
                 skipLarger: true,
                 mode: 0,
                 quality: 11,

@@ -1,8 +1,11 @@
-import { CONSTS } from './CONSTS';
+import { onError } from 'gulp-notify';
 import { src, dest } from 'gulp';
 import gulpChanged from 'gulp-changed';
 import gulpIf from 'gulp-if';
+import gulpPlumber from 'gulp-plumber';
 import gulpLivereload from 'gulp-livereload';
+
+import { CONSTS } from './CONSTS';
 
 const {
     JSON_SRC,
@@ -31,6 +34,11 @@ function copyStaticFiles() {
 
 function copyFilesFn(srcdir, destdir, base = '.', reload) {
     return src(srcdir, { base })
+        .pipe(
+            gulpPlumber({
+                errorHandler: onError('copy error: <%= error.message %>')
+            })
+        )
         .pipe(gulpChanged(destdir))
         .pipe(dest(destdir))
         .pipe(

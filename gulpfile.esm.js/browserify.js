@@ -67,7 +67,7 @@ function addToBrowserify(locale) {
                 presets: ['@babel/preset-env'],
                 sourceMaps: true
             });
-            b.plugin(watchify, { delay: 1000 });
+            b.plugin(watchify, { delay: 100 });
         } else {
             b.transform('babelify', { presets: ['@babel/preset-env'] });
             b.plugin('tinyify', { flat: false });

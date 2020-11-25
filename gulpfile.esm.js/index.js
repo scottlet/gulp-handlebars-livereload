@@ -27,15 +27,22 @@ const build = series(
 );
 
 const handlebars = series(buildHTML);
+const compress = parallel(brotli, gzip);
 
 const defaultTask = series(build, parallel(watch, server));
-const deployTask = series(build, copyDeploy, parallel(brotli, gzip));
+const deployTask = series(build, copyDeploy, compress);
 
 export {
     browserify,
     buildHTML,
+    compress,
+    copyStaticFiles as copy,
     defaultTask as default,
     deployTask as deploy,
+    doc,
+    eslint,
     handlebars,
+    mochaTest,
+    sass,
     server
 };
