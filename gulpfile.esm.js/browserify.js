@@ -1,11 +1,12 @@
-import browserify from 'browserify';
 import { CONSTS } from './CONSTS';
+import { dest } from 'gulp';
+import { onError } from 'gulp-notify';
+import browserify from 'browserify';
+import commonShakeify from 'common-shakeify';
 import fancyLog from 'fancy-log';
 import glob from 'glob';
-import { dest } from 'gulp';
 import gulpIf from 'gulp-if';
 import gulpLivereload from 'gulp-livereload';
-import { onError } from 'gulp-notify';
 import gulpPlumber from 'gulp-plumber';
 import gulpReplace from 'gulp-replace';
 import merge2 from 'merge2';
@@ -60,7 +61,7 @@ function addToBrowserify(locale) {
             .replace('$version', VERSION)
             .replace(/.*\/([\w$\-.]+).js/, '$1');
 
-        const b = browserify(options);
+        const b = browserify(options).plugin(commonShakeify, {});
 
         if (isDev) {
             b.transform('babelify', {
