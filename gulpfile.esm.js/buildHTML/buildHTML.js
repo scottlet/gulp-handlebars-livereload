@@ -7,6 +7,7 @@ import gulpPlumber from 'gulp-plumber';
 import gulpRename from 'gulp-rename';
 import merge2 from 'merge2';
 import through2 from 'through2';
+import wait from 'gulp-wait';
 
 import { CONSTS } from '../CONSTS';
 import {
@@ -19,6 +20,7 @@ import {
 } from './template-helpers';
 
 const { LIVERELOAD_PORT } = CONSTS;
+const LIVERELOAD_DELAY = 250;
 
 function buildFiles({ path }, enc, callback) {
     const locale = getStem(path);
@@ -59,6 +61,7 @@ function buildFiles({ path }, enc, callback) {
         .pipe(gulpRename(renameFile))
         .pipe(gulpHtmlmin(htmlMinOptions))
         .pipe(dest(finalPath))
+        .pipe(wait(LIVERELOAD_DELAY))
         .pipe(gulpLivereload({ port: LIVERELOAD_PORT }));
 
     const components = src([
@@ -74,6 +77,7 @@ function buildFiles({ path }, enc, callback) {
         .pipe(gulpRename(renameFile))
         .pipe(gulpHtmlmin(htmlMinOptions))
         .pipe(dest(jspath))
+        .pipe(wait(LIVERELOAD_DELAY))
         .pipe(gulpLivereload({ port: LIVERELOAD_PORT }));
 
     return merge2(pages, components).on('finish', callback);

@@ -8,13 +8,12 @@ import gulpLivereload from 'gulp-livereload';
 import gulpPlumber from 'gulp-plumber';
 import gulpPostcss from 'gulp-postcss';
 import gulpRename from 'gulp-rename';
-import gulpSass from 'gulp-sass';
+import gulpSass from 'gulp-dart-sass';
 import gulpSassVariables from 'gulp-sass-variables';
 import postcssAssets from 'postcss-assets';
 import postcssImport from 'postcss-import';
 import postcssNormalize from 'postcss-normalize';
 import postcssPresetEnv from 'postcss-preset-env';
-import sass from 'sass';
 
 import { CONSTS } from './CONSTS';
 
@@ -38,8 +37,6 @@ const sassOptions = {
 };
 
 const gulpOptions = isDev ? { sourcemaps: true } : {};
-
-gulpSass.compiler = sass;
 
 function buildSassVariables(breakpoints) {
     let b;

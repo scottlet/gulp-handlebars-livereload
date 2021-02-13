@@ -1,10 +1,9 @@
-import { CONSTS } from './CONSTS';
 import { dest } from 'gulp';
 import { onError } from 'gulp-notify';
 import browserify from 'browserify';
 import commonShakeify from 'common-shakeify';
 import fancyLog from 'fancy-log';
-import glob from 'glob';
+import { sync } from 'glob';
 import gulpIf from 'gulp-if';
 import gulpLivereload from 'gulp-livereload';
 import gulpPlumber from 'gulp-plumber';
@@ -13,6 +12,8 @@ import merge2 from 'merge2';
 import vinylBuffer from 'vinyl-buffer';
 import vinylSourceStream from 'vinyl-source-stream';
 import watchify from 'watchify';
+
+import { CONSTS } from './CONSTS';
 
 const {
     API,
@@ -30,7 +31,7 @@ const {
 
 const isDev = NODE_ENV !== 'production';
 
-const entries = glob.sync(JS_SRC + '*.js');
+const entries = sync(JS_SRC + '*.js');
 
 function addToBrowserify(locale) {
     let localeStr = locale.replace('en', '');

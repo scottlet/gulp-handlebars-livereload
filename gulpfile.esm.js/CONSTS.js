@@ -14,7 +14,6 @@ if (!process.env.LIVERELOAD_PORT) {
 }
 
 try {
-    const fs = require('fs');
     const pth = fs.realpathSync('.');
 
     OPTIONS = require(pth + '/src/options.js');
@@ -26,7 +25,7 @@ const langs = fs.readdirSync('./src/i18n/').map(file => {
     return file.replace('.json', '');
 });
 
-let CONSTS = {
+const DEFAULTS = {
     BUILD_DIST: 'zip/',
     BUILD_DEST: 'dist/',
     CSS_DEST: `${STATIC_ASSETS}/css`,
@@ -58,6 +57,9 @@ let CONSTS = {
     VIDEO_SRC: 'src/video'
 };
 
-CONSTS = Object.assign(CONSTS, OPTIONS || {});
+const CONSTS = {
+    ...DEFAULTS,
+    ...OPTIONS
+};
 
 export { CONSTS };
