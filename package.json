@@ -54,7 +54,7 @@
     "@types/vinyl-buffer": "^1.0.0",
     "@types/vinyl-source-stream": "^0.0.30",
     "@types/watchify": "^3.11.0",
-    "autoprefixer": "^10.0.2",
+    "autoprefixer": "^10.2.5",
     "babelify": "^10.0.0",
     "browserify": "^17.0.0",
     "browserify-replace": "^1.0.1",
