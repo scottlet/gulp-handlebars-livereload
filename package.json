@@ -107,7 +107,7 @@
     "prettier": "^2.2.0",
     "require-dir": "^1.2.0",
     "sass": "^1.29.0",
-    "sinon": "^9.2.1",
+    "sinon": "^10.0.1",
     "tinyify": "^3.0.0",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0",
