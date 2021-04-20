@@ -24,8 +24,7 @@
         "plugin:import/react",
         "plugin:react/recommended",
         "plugin:prettier/recommended",
-        "prettier",
-        "prettier/react"
+        "prettier"
     ],
     "parserOptions": {
         "sourceType": "module",
