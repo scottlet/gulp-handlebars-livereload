@@ -29,7 +29,7 @@
     "sass": "NODE_ENV=production gulp sass"
   },
   "dependencies": {
-    "@babel/core": "^7.13.15",
+    "@babel/core": "^7.13.16",
     "@babel/preset-env": "^7.13.15",
     "@types/autoprefixer": "^9.7.2",
     "@types/browserify": "^12.0.36",
