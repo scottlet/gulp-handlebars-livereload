@@ -86,7 +86,7 @@
     "gulp-if": "^3.0.0",
     "gulp-jsdoc3": "^3.0.0",
     "gulp-livereload": "^4.0.2",
-    "gulp-notify": "^3.2.0",
+    "gulp-notify": "^4.0.0",
     "gulp-plumber": "^1.2.1",
     "gulp-postcss": "^9.0.0",
     "gulp-precompile-handlebars": "^2.0.7",
