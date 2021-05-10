@@ -101,7 +101,7 @@
     "istanbul": "^0.4.5",
     "merge-stream": "^2.0.0",
     "merge2": "^1.4.1",
-    "mocha": "^8.3.2",
+    "mocha": "^8.4.0",
     "postcss": "^8.2.13",
     "postcss-assets": "^5.0.0",
     "postcss-import": "^14.0.1",
