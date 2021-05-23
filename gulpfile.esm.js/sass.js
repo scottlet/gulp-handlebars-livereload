@@ -2,7 +2,6 @@ import { onError } from 'gulp-notify';
 import { src, dest } from 'gulp';
 import cssMqpacker from 'css-mqpacker';
 import cssnano from 'cssnano';
-import Fiber from 'fibers';
 import gulpIf from 'gulp-if';
 import gulpLivereload from 'gulp-livereload';
 import gulpPlumber from 'gulp-plumber';
@@ -32,7 +31,6 @@ const isDev = NODE_ENV !== 'production';
 
 const sassOptions = {
     errLogToConsole: true,
-    fiber: Fiber,
     includePaths: [COMPONENTS_SRC]
 };
 
