@@ -62,7 +62,7 @@
     "browserify-replace": "^1.1.0",
     "chai": "^4.3.4",
     "css-mqpacker": "^7.0.0",
-    "cssnano": "^5.0.4",
+    "cssnano": "^5.0.6",
     "cssnano-preset-lite": "^2.0.1",
     "del": "^6.0.0",
     "eslint-config-prettier": "^8.3.0",
