@@ -1,5 +1,5 @@
 import { src } from 'gulp';
-import { onError } from 'gulp-notify';
+import { notify } from './notify';
 import gulpPlumber from 'gulp-plumber';
 import gulpSpawnMocha from 'gulp-spawn-mocha';
 import gulpWait from 'gulp-wait';
@@ -14,7 +14,7 @@ function mochaTestLR() {
         .pipe(gulpWait(TEST_DELAY))
         .pipe(
             gulpPlumber({
-                errorHandler: onError('gulpMocha Error: <%= error.message %>')
+                errorHandler: notify('gulpMocha Error: <%= error.message %>')
             })
         )
         .pipe(gulpSpawnMocha({ R: 'nyan' }));
@@ -24,7 +24,7 @@ function mochaTest() {
     return src(TESTS_PATH + '**/*.js', { read: false })
         .pipe(
             gulpPlumber({
-                errorHandler: onError('gulpMocha Error: <%= error.message %>')
+                errorHandler: notify('gulpMocha Error: <%= error.message %>')
             })
         )
         .pipe(gulpSpawnMocha({ R: 'nyan' }));

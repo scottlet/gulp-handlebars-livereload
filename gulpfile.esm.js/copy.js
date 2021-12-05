@@ -1,4 +1,4 @@
-import { onError } from 'gulp-notify';
+import { notify } from './notify';
 import { src, dest } from 'gulp';
 import gulpChanged from 'gulp-changed';
 import gulpIf from 'gulp-if';
@@ -36,7 +36,7 @@ function copyFilesFn(srcdir, destdir, base = '.', reload) {
     return src(srcdir, { base })
         .pipe(
             gulpPlumber({
-                errorHandler: onError('copy error: <%= error.message %>')
+                errorHandler: notify('copy error: <%= error.message %>')
             })
         )
         .pipe(gulpChanged(destdir))

@@ -1,4 +1,4 @@
-import { onError } from 'gulp-notify';
+import { notify } from './notify';
 import { src, dest } from 'gulp';
 import cssMqpacker from 'css-mqpacker';
 import cssnano from 'cssnano';
@@ -70,7 +70,7 @@ function compileSass() {
     return src(SASS_SRC + '/**/*.scss', gulpOptions)
         .pipe(
             gulpPlumber({
-                errorHandler: onError('Styles Error: <%= error.message %>')
+                errorHandler: notify('Styles Error: <%= error.message %>')
             })
         )
         .pipe(gulpSassVariables(sassVariables))

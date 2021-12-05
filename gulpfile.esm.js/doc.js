@@ -1,4 +1,4 @@
-import { onError } from 'gulp-notify';
+import { notify } from './notify';
 import { src } from 'gulp';
 import gulpPlumber from 'gulp-plumber';
 import jsdoc from 'gulp-jsdoc3';
@@ -15,7 +15,7 @@ function doc(cb) {
     )
         .pipe(
             gulpPlumber({
-                errorHandler: onError('jsdoc3 error: <%= error.message %>')
+                errorHandler: notify('jsdoc3 error: <%= error.message %>')
             })
         )
         .pipe(jsdoc(cb));
