@@ -1,6 +1,7 @@
 import { src } from 'gulp';
 import gulpESLint from 'gulp-eslint';
-import { onError } from 'gulp-notify';
+import gulpChangedInPlace from 'gulp-changed-in-place';
+import { notify } from './notify';
 import gulpPlumber from 'gulp-plumber';
 import { CONSTS } from './CONSTS';
 
@@ -10,12 +11,12 @@ function lint() {
     return src([GULPFILE, `${GULP_TASKS}/**/*.js`, `${JS_SRC}/**/*.js`])
         .pipe(
             gulpPlumber({
-                errorHandler: onError('ESLint Error: <%= error.message %>')
+                errorHandler: notify('ESLint Error: <%= error.message %>')
             })
         )
+        .pipe(gulpChangedInPlace())
         .pipe(gulpESLint())
-        .pipe(gulpESLint.format())
-        .pipe(gulpESLint.failAfterError());
+        .pipe(gulpESLint.format());
 }
 
 export { lint as eslint };

@@ -1,5 +1,5 @@
 import { dest } from 'gulp';
-import { onError } from 'gulp-notify';
+import { notify } from './notify';
 import browserify from 'browserify';
 import commonShakeify from 'common-shakeify';
 import fancyLog from 'fancy-log';
@@ -96,7 +96,7 @@ function addToBrowserify(locale) {
                 .bundle()
                 .pipe(
                     gulpPlumber({
-                        errorHandler: onError(
+                        errorHandler: notify(
                             'Bundle Error: <%= error.message %>'
                         )
                     })
