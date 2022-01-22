@@ -6,6 +6,10 @@ import { CONSTS } from '../CONSTS';
 
 const { LANGS, HOST, PATH, NODE_ENV, NAME, VERSION } = CONSTS;
 
+function datestamp() {
+    return Date.now();
+}
+
 const staticHelpers = {
     uc: str => {
         return str.toUpperCase();
@@ -89,7 +93,8 @@ const staticHelpers = {
         return NODE_ENV === 'production';
     },
     name: NAME,
-    version: VERSION
+    version: () => VERSION,
+    datestamp: () => Date.now()
 };
 
 let errorShown;
@@ -139,11 +144,13 @@ function pathBuilder(locale) {
         }
 
         if (staticasset) {
-            newPath = `${staticLocale}${VERSION}/${newPath}`;
+            newPath = `/${staticLocale}${VERSION}/${newPath}`;
         } else {
             newPath =
                 (urlparts.length ? `${urlparts.join('/')}/` : '') + newPath;
         }
+
+        newPath = newPath.replace(/ /g, '%20');
 
         return newPath || '/';
     };
