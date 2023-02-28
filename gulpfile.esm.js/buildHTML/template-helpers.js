@@ -6,10 +6,6 @@ import { CONSTS } from '../CONSTS';
 
 const { LANGS, HOST, PATH, NODE_ENV, NAME, VERSION } = CONSTS;
 
-function datestamp() {
-    return Date.now();
-}
-
 const staticHelpers = {
     uc: str => {
         return str.toUpperCase();

@@ -4,8 +4,8 @@ import { CONSTS } from './CONSTS';
 import header from 'connect-header';
 
 const headerMiddleware = header({
-    'Expires': '0',
-    'Pragma': 'no-cache',
+    Expires: '0',
+    Pragma: 'no-cache',
     'Cache-Control': 'no-cache, no-store, must-revalidate'
 });
 
@@ -21,9 +21,7 @@ function makeServer(cb) {
         livereload: {
             port: LIVERELOAD_PORT
         },
-        middleware: () => [
-            headerMiddleware
-        ],
+        middleware: () => [headerMiddleware]
     });
     fancyLog('server http://127.0.0.1:' + GULP_PORT);
     server({

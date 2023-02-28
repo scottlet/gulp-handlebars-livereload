@@ -1,3 +1,1 @@
-import { buildHTML } from './buildHTML';
-
-export { buildHTML };
+export { buildHTML } from './buildHTML';
