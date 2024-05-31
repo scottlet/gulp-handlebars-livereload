@@ -2,8 +2,8 @@
   "name": "gulp-handlebars-livereload",
   "version": "4.7.1",
   "private": false,
-  "homepage": "https://github.com/scottbert/gulp-handlebars-livereload",
-  "bugs": "https://github.com/scottbert/gulp-handlebars-livereload/issues",
+  "homepage": "https://github.com/scottlet/gulp-handlebars-livereload",
+  "bugs": "https://github.com/scottlet/gulp-handlebars-livereload/issues",
   "description": "build static sites using gulp and handlebars",
   "keywords": [
     "gulp",
@@ -18,7 +18,7 @@
   "contributors": [
     "Scott van Looy"
   ],
-  "repository": "https://github.com/scottbert/gulp-handlebars-livereload.git",
+  "repository": "https://github.com/scottlet/gulp-handlebars-livereload.git",
   "engines": {
     "node": ">=10 <=18"
   },
