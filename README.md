@@ -12,7 +12,7 @@ To run the demo, additionally check out https://github.com/scottlet/gulp-handleb
 
 NPM pre 7: `npm install` - NPM 7 and above: `npm install --legacy-peer-deps`
 
-Then `npm run develop` to run the livereload local server ( [http://localhost:9000](http://localhost:9000) )
+Then `npm run develop` to run the livereload local server ( [http://localhost:9000](http://localhost:9000) ) - also there will be a documentation server on [http://localhost:9001](http://localhost:9001)
 
 `npm run deploy` to deploy - this puts all of the required files into a `deploy` directory. You can now put this directory somewhere else and run it.
 
@@ -29,3 +29,4 @@ Then `npm run develop` to run the livereload local server ( [http://localhost:90
 - Linting
 - jsconfig.json for type checking/autocomplete in VSCode/VSCodium
 - ES6 modules and imports/exports in Javascript, `~/` shortcut to local modules at `src/js/modules`
+- auto generated documentation from JSDoc.
