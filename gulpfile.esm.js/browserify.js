@@ -48,7 +48,8 @@ const plugins = [
 /**
  * Creates a function that adds a Browserify bundle for a specific locale.
  * @param {string} locale - The locale for which to create the bundle.
- * @returns {function(string)} A function that takes an entry point and returns a Browserify bundle.
+ * @returns {function(string): NodeJS.ReadWriteStream} A function that
+ * takes an entry point and returns a Browserify bundle.
  */
 function addToBrowserify(locale) {
   let localeStr = locale.replace('en', '');

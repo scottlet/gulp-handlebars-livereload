@@ -9,6 +9,11 @@ const { TESTS_PATH } = CONSTS;
 
 const TEST_DELAY = 3050;
 
+const mochaOptions = {
+  require: ['esm'],
+  R: 'nyan'
+};
+
 /**
  * Executes Mocha tests with a delay and notifies on errors.
  * @returns {NodeJS.ReadWriteStream} The Gulp stream with the Mocha test results.
@@ -21,7 +26,7 @@ function mochaTestLR() {
         errorHandler: notify('gulpMocha Error: <%= error.message %>')
       })
     )
-    .pipe(gulpSpawnMocha({ R: 'nyan' }));
+    .pipe(gulpSpawnMocha(mochaOptions));
 }
 
 /**
@@ -35,7 +40,7 @@ function mochaTest() {
         errorHandler: notify('gulpMocha Error: <%= error.message %>')
       })
     )
-    .pipe(gulpSpawnMocha({ R: 'nyan' }));
+    .pipe(gulpSpawnMocha(mochaOptions));
 }
 
 export { mochaTest, mochaTestLR };

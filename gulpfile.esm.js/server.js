@@ -29,14 +29,23 @@ function makeServer(cb) {
     },
     middleware: () => [headerMiddleware]
   });
-  fancyLog('server http://127.0.0.1:' + GULP_PORT);
+
   server({
     port: DOC_PORT,
     host: '0.0.0.0',
     root: './docs/gen'
   });
-  fancyLog('Documentation server http://127.0.0.1:' + DOC_PORT);
+
   cb();
+  console.log('\n');
+  fancyLog(
+    '\x1b[32m%s\x1b[0m',
+    'Development Server http://127.0.0.1:' + GULP_PORT
+  );
+  fancyLog(
+    '\x1b[32m%s\x1b[0m',
+    'Documentation server http://127.0.0.1:' + DOC_PORT
+  );
 }
 
 export { makeServer as server };
