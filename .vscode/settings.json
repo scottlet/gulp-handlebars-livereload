@@ -1,0 +1,14 @@
+{
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll.stylelint": "explicit"
+  },
+  "editor.unicodeHighlight.ambiguousCharacters": false,
+  "gitlens.advanced.blame.customArguments": [
+    "--ignore-revs-file",
+    ".git-blame-ignore-revs"
+  ],
+  "stylelint.configBasedir": "../",
+  "typescript.tsdk": "node_modules/typescript/lib"
+}

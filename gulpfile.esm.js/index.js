@@ -15,15 +15,15 @@ import { watch } from './watch';
 import { buildHTML } from './buildHTML';
 
 const build = series(
-    clean,
-    parallel(
-        eslint,
-        doc,
-        copyStaticFiles,
-        series(buildHTML, browserify),
-        mochaTest,
-        sass
-    )
+  clean,
+  parallel(
+    eslint,
+    doc,
+    copyStaticFiles,
+    series(buildHTML, browserify),
+    mochaTest,
+    sass
+  )
 );
 
 const handlebars = series(buildHTML);
@@ -33,16 +33,16 @@ const defaultTask = series(build, parallel(watch, server));
 const deployTask = series(build, copyDeploy, compress);
 
 export {
-    browserify,
-    buildHTML,
-    compress,
-    copyStaticFiles as copy,
-    defaultTask as default,
-    deployTask as deploy,
-    doc,
-    eslint,
-    handlebars,
-    mochaTest,
-    sass,
-    server
+  browserify,
+  buildHTML,
+  compress,
+  copyStaticFiles as copy,
+  defaultTask as default,
+  deployTask as deploy,
+  doc,
+  eslint,
+  handlebars,
+  mochaTest,
+  sass,
+  server
 };

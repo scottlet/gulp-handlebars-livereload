@@ -7,16 +7,21 @@ import { CONSTS } from './CONSTS';
 
 const { GULPFILE, GULP_TASKS, JS_SRC } = CONSTS;
 
+/**
+ * Lints the specified JavaScript files using ESLint.
+ * @returns {NodeJS.ReadWriteStream} The stream of linted files.
+ */
 function lint() {
-    return src([GULPFILE, `${GULP_TASKS}/**/*.js`, `${JS_SRC}/**/*.js`])
-        .pipe(
-            gulpPlumber({
-                errorHandler: notify('ESLint Error: <%= error.message %>')
-            })
-        )
-        .pipe(gulpChangedInPlace())
-        .pipe(gulpESLint())
-        .pipe(gulpESLint.format());
+  return src([GULPFILE, `${GULP_TASKS}/**/*.js`, `${JS_SRC}/**/*.js`])
+    .pipe(
+      gulpPlumber({
+        errorHandler: notify('ESLint Error: <%= error.message %>')
+      })
+    )
+    .pipe(gulpChangedInPlace())
+    .pipe(gulpESLint())
+    .pipe(gulpESLint.format())
+    .pipe(gulpESLint.failAfterError());
 }
 
 export { lint as eslint };
