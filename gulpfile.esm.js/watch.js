@@ -4,7 +4,7 @@ import { doc } from './doc';
 import { eslint } from './eslint';
 import { sass } from './sass';
 import { copyStaticFiles } from './copy';
-import { mochaTestLR } from './mochaTest';
+import { mochaTest } from './mochaTest';
 import { parallel, watch } from 'gulp';
 import gulpLivereload from 'gulp-livereload';
 import { CONSTS } from './CONSTS';
@@ -17,7 +17,6 @@ const {
   FONT_SRC,
   IMG_SRC,
   SASS_SRC,
-  JS_SRC,
   TEMPLATES_SRC,
   JSON_SRC,
   VIDEO_SRC
@@ -48,21 +47,21 @@ function watchers(cb) {
   const watchSass = watch(SASS, sass);
   const watchTemplates = watch(TEMPLATES, buildHTML);
   const watchData = watch(DATA, buildHTML);
-  const watchTests = watch(JS_SRC + '**/*-test.js', mochaTestLR);
+  const watchTests = watch('**/*.js', mochaTest);
   const watchDocs = watch(JS, parallel(doc, eslint));
   const watchPackages = watch('./package.json', buildHTML);
 
   [
-    watchPublic,
-    watchSass,
-    watchData,
-    watchDocs,
-    watchTemplates,
-    watchTests,
-    watchPackages
+    { label: 'watchPublic', watcher: watchPublic },
+    { label: 'watchSass', watcher: watchSass },
+    { label: 'watchData', watcher: watchData },
+    { label: 'watchDocs', watcher: watchDocs },
+    { label: 'watchTemplates', watcher: watchTemplates },
+    { label: 'watchTests', watcher: watchTests },
+    { label: 'watchPackages', watcher: watchPackages }
   ].forEach(w => {
-    w.on('change', function (path) {
-      fancyLog(`file ${path} was changed. Triggered by ${this.name} watcher.`);
+    w.watcher.on('change', path => {
+      fancyLog(`file ${path} was changed. Triggered by ${w.label} watcher.`);
     });
   });
   cb();

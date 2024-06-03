@@ -1,6 +1,7 @@
 module.exports = {
   env: {
     node: true,
+    mocha: true,
     es6: true
   },
   plugins: ['import', 'jsdoc', 'prettier'],

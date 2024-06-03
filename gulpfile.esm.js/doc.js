@@ -13,9 +13,12 @@ import { deleteSync } from 'del';
 function doc(cb) {
   deleteSync('./docs/gen');
 
-  src(['./README.md', `./${CONSTS.JS_SRC}**`], {
-    read: false
-  })
+  src(
+    ['./README.md', `./${CONSTS.JS_SRC}**`, `!./${CONSTS.JS_SRC}**/*.test.js`],
+    {
+      read: false
+    }
+  )
     .pipe(
       gulpPlumber({
         errorHandler: notify('jsdoc3 error: <%= error.message %>')
