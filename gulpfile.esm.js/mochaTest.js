@@ -8,7 +8,7 @@ import gulpChangedInPlace from 'gulp-changed-in-place';
 
 const { SRC, GULPFILE } = CONSTS;
 
-const TEST_DELAY = 3050;
+const TEST_DELAY = 1;
 
 const mochaOptions = {
   require: ['esm'],

@@ -7,3 +7,4 @@ deploy/
 src/node_modules/
 .cache
 .tmp
+src/

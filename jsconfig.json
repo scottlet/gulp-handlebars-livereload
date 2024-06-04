@@ -13,6 +13,6 @@
     },
     "types": ["node", "mocha", "undertaker"]
   },
-  "include": ["./src/js/**/*", "./src/tests/**/*", "./gulpfile.esm.js/**/*"],
+  "include": ["./src/js/**/*", "./gulpfile.esm.js/**/*"],
   "exclude": ["node_modules", "**/node_modules/*"]
 }

@@ -54,7 +54,7 @@ describe('staticHelpers', () => {
     });
   });
 
-  describe('num', () => {
+  describe('str', () => {
     it('has an arity of one', () => {
       expect(staticHelpers.str.length).to.eq(1);
     });
