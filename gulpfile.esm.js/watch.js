@@ -69,7 +69,7 @@ function watchers(cb) {
 }
 
 /**
- * Watches for changes in various directories and triggers corresponding tasks.
+ * Watches for changes in test files and triggers the mocha test task.
  * @param {Function} cb - The callback function to be called
  * @returns {void}
  */
