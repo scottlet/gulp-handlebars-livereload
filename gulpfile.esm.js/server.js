@@ -42,12 +42,12 @@ function makeServer(cb) {
   console.log('\n');
   fancyLog(
     '\x1b[32m%s\x1b[0m',
-    `Development Server http://127.0.0.1:${GULP_PORT}`,
+    `>> Development Server http://127.0.0.1:${GULP_PORT}`,
     '\x1b[0m'
   );
   fancyLog(
     '\x1b[32m%s\x1b[0m',
-    `Documentation server http://127.0.0.1:'${DOC_PORT}`,
+    `>> Documentation server http://127.0.0.1:'${DOC_PORT}`,
     '\x1b[0m'
   );
 }
