@@ -2,6 +2,9 @@
   "name": "gulp-handlebars-livereload",
   "version": "5.0.1",
   "private": false,
+  "overrides": {
+    "chalk": "^4.1.2"
+  },
   "homepage": "https://github.com/scottlet/gulp-handlebars-livereload",
   "bugs": "https://github.com/scottlet/gulp-handlebars-livereload/issues",
   "description": "build static sites using gulp and handlebars",
