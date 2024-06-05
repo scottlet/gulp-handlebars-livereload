@@ -4,7 +4,7 @@ import { doc } from './doc';
 import { eslint } from './eslint';
 import { sass } from './sass';
 import { copyStaticFiles } from './copy';
-import { mochaTest } from './mochaTest';
+import { mochaTest, mochaTestSrc } from './mochaTest';
 import { parallel, watch } from 'gulp';
 import gulpLivereload from 'gulp-livereload';
 import { CONSTS } from './CONSTS';
@@ -40,9 +40,6 @@ const TEMPLATES = [TEMPLATES_SRC + '**/*.hbs'];
  * @returns {void}
  */
 function watchers(cb) {
-  gulpLivereload.listen({
-    port: LIVERELOAD_PORT
-  });
   const watchPublic = watch(PUBLIC, copyStaticFiles);
   const watchSass = watch(SASS, sass);
   const watchTemplates = watch(TEMPLATES, buildHTML);
@@ -50,6 +47,10 @@ function watchers(cb) {
   const watchTests = watch('**/*.js', mochaTest);
   const watchDocs = watch(JS, parallel(doc, eslint));
   const watchPackages = watch('./package.json', buildHTML);
+
+  gulpLivereload.listen({
+    port: LIVERELOAD_PORT
+  });
 
   [
     { label: 'watchPublic', watcher: watchPublic },
@@ -67,4 +68,21 @@ function watchers(cb) {
   cb();
 }
 
-export { watchers as watch };
+/**
+ * Watches for changes in various directories and triggers corresponding tasks.
+ * @param {Function} cb - The callback function to be called
+ * @returns {void}
+ */
+function testWatcher(cb) {
+  const watchTestsSrc = watch('**/*.js', mochaTestSrc);
+
+  [{ label: 'Watch src tests', watcher: watchTestsSrc }].forEach(w => {
+    w.watcher.on('change', path => {
+      fancyLog(`file ${path} was changed. Triggered by ${w.label} watcher.`);
+    });
+  });
+  mochaTestSrc();
+  cb();
+}
+
+export { watchers as watch, testWatcher };

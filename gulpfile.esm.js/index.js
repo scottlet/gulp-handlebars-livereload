@@ -8,10 +8,10 @@ import { gzip } from './gzip';
 import { doc } from './doc';
 
 import { eslint } from './eslint';
-import { mochaTest } from './mochaTest';
+import { mochaTest, mochaTestSrc } from './mochaTest';
 import { sass } from './sass';
 import { server } from './server';
-import { watch } from './watch';
+import { watch, testWatcher } from './watch';
 import { buildHTML } from './buildHTML';
 
 const build = series(
@@ -31,6 +31,7 @@ const compress = parallel(brotli, gzip);
 
 const defaultTask = series(build, parallel(watch, server));
 const deployTask = series(build, copyDeploy, compress);
+const watchTask = series(build, watch);
 
 export {
   browserify,
@@ -43,6 +44,9 @@ export {
   eslint,
   handlebars,
   mochaTest,
+  mochaTestSrc,
   sass,
-  server
+  server,
+  watchTask as watch,
+  testWatcher
 };

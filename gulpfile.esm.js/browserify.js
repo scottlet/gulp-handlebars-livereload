@@ -30,7 +30,7 @@ const {
 
 const isDev = NODE_ENV !== 'production';
 
-const entries = sync(JS_SRC + '*.js');
+const entries = sync(`${JS_SRC}*.js`);
 
 const plugins = [
   [
@@ -62,7 +62,6 @@ function addToBrowserify(locale) {
    */
   return function (entry) {
     const options = {
-      builtins: {},
       entries: [entry],
       cache: {},
       debug: !!isDev,
