@@ -9,6 +9,6 @@
     "--ignore-revs-file",
     ".git-blame-ignore-revs"
   ],
-  "stylelint.configBasedir": "../",
+  "stylelint.configBasedir": ".",
   "typescript.tsdk": "node_modules/typescript/lib"
 }

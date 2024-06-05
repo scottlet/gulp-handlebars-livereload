@@ -1,7 +1,7 @@
 import { src } from 'gulp';
 import { notify } from './notify';
 import gulpPlumber from 'gulp-plumber';
-import gulpSpawnMocha from 'gulp-spawn-mocha';
+import gulpMocha from 'gulp-mocha';
 import gulpWait from 'gulp-wait';
 import { CONSTS } from './CONSTS';
 import gulpChangedInPlace from 'gulp-changed-in-place';
@@ -12,7 +12,7 @@ const TEST_DELAY = 1;
 
 const mochaOptions = {
   require: ['esm'],
-  R: 'spec'
+  R: 'base'
 };
 
 if (process.env.NODE_ENV === 'production') {
@@ -36,7 +36,7 @@ function mochaTestLR() {
       })
     )
     .pipe(gulpChangedInPlace())
-    .pipe(gulpSpawnMocha(mochaOptions));
+    .pipe(gulpMocha(mochaOptions));
 }
 
 /**
@@ -53,7 +53,7 @@ function mochaTest() {
       })
     )
     .pipe(gulpChangedInPlace())
-    .pipe(gulpSpawnMocha(mochaOptions));
+    .pipe(gulpMocha(mochaOptions));
 }
 
 export { mochaTest, mochaTestLR };

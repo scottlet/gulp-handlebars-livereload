@@ -1,7 +1,14 @@
 module.exports = {
+  overrides: [
+    {
+      files: ['**/*.test.*'],
+      env: {
+        mocha: true
+      }
+    }
+  ],
   env: {
     node: true,
-    mocha: true,
     es6: true
   },
   plugins: ['import', 'jsdoc', 'prettier'],

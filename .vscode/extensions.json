@@ -2,6 +2,9 @@
   "recommendations": [
     "dbaeumer.vscode-eslint",
     "editorconfig.editorconfig",
-    "eamodio.gitlens"
+    "eamodio.gitlens",
+    "esbenp.prettier-vscode",
+    "hbenl.vscode-mocha-test-adapter",
+    "stylelint.vscode-stylelint"
   ]
 }
